@@ -1,0 +1,32 @@
+{
+    "walletAddress": "0x035b6530ef09e227ca9f92efb66df12d0da9fface35ecd53b53a918c7d4eaa75",
+    "count": 2,
+    "tokenAllowances": [
+        {
+            "contractAddress": "0x049d36570d4e46f48e99674bd3fcc84644ddd6b96f7c741b1562b82f9e004dc7",
+            "contractDecimals": "18",
+            "contractName": "Ether",
+            "contractSymbol": "ETH",
+            "spenderAddress": "0x040784ffdde08057a5957e64ed360c0ae4e04117b6d8e351c6bb912c09c5cbf5",
+            "allowance": "137322301716",
+            "walletBalance": "974188833664780",
+            "blockHash": "0x0217eda11921ba98c4d6549913792502d07c7f5608433c3ddd6413f7e82c5089",
+            "blockNumber": 813431,
+            "blockTimestamp": "2024-10-19T10:10:56.000Z",
+            "transactionHash": "0x067b5d04634a0c2cedcf1e5ffa557408415a728575bbbbefd41af3352f576e4d"
+        },
+        {
+            "contractAddress": "0x053c91253bc9682c04929ca02ed00b3e423f6710d2ee7e0d5ebb06f3ecf368a8",
+            "contractDecimals": "6",
+            "contractName": "USD Coin",
+            "contractSymbol": "USDC",
+            "spenderAddress": "0x040784ffdde08057a5957e64ed360c0ae4e04117b6d8e351c6bb912c09c5cbf5",
+            "allowance": "1",
+            "walletBalance": "0",
+            "blockHash": "0x02a5d0916f4895bd8fbf75d646cb9bfa31480af629c303b9253c684ed6b2b9c3",
+            "blockNumber": 708979,
+            "blockTimestamp": "2024-09-10T22:55:39.000Z",
+            "transactionHash": "0x0581ac7d23b7736653be0171a681acbd82cff6f746f560e784501785f6a11121"
+        }
+    ]
+}
