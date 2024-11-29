@@ -147,7 +147,7 @@ def feed_builder_request(project_id, contract_name, params):
         print(e)
         return None
     
-    print("Calling "+ contract_name)
+    #print("Calling "+ contract_name)
     
     return response 
 
