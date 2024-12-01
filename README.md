@@ -52,7 +52,7 @@ This Python script helps crypto accountants manage data efficiently. The primary
 To use the script, simply run the following command in your terminal:
 
 ```bash
-python run.py "<wallet_address>"
+python src/run.py "<wallet_address>"
 ```
 
 ### Example
