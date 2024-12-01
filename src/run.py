@@ -14,7 +14,7 @@ def main(wallet_address: str):
     project_id = os.getenv("PROJECT_ID")
 
     output_json_path = wallet_address + "_wallet_transactions.json"
-    output_csv_path = wallet_address + "_wallet_transactions.csv"
+    output_csv_path = "../" + wallet_address + "_wallet_transactions.csv"
 
     print("Fetching all token transfers...")
 
