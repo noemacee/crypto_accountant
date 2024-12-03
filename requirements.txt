@@ -1,3 +1,5 @@
+# For Windows, "venv\Scripts\activate"
+
 appnope==0.1.4
 asttokens==2.4.1
 certifi==2024.8.30
