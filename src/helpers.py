@@ -192,6 +192,21 @@ def process_transactions(project_id, json_data, wallet_address):
                 else tx["fromAddress"]
             )
 
+            counterparty_name = (
+                "Nostra"
+                if counterparty_address in pool_tokens.keys()
+                else (
+                    "Nostra"
+                    if counterparty_address in debt_tokens.keys()
+                    else (
+                        "Nostra"
+                        if counterparty_address
+                        in interest_bearing_and_collat_tokens.keys()
+                        else protocol_addresses_map.get(counterparty_address)
+                    )
+                )
+            )
+
             # Create a single-row DataFrame for the current operation
             record_df = pd.DataFrame(
                 [
@@ -217,9 +232,7 @@ def process_transactions(project_id, json_data, wallet_address):
                             else "Transaction"
                         ),
                         "Counterparty address": counterparty_address,
-                        "Counterparty name": (
-                            protocol_addresses_map.get(counterparty_address)
-                        ),
+                        "Counterparty name": counterparty_name,
                         "Transaction hash": tx["transactionHash"],
                         "Blockchain": "Starknet",
                         "Wallet": wallet_address,
