@@ -1,5 +1,11 @@
 PAGE_SIZE = 100
 
+
+WALLET_ADDRESSES = [
+    "0x035b6530ef09e227ca9f92efb66df12d0da9fface35ecd53b53a918c7d4eaa75",
+]
+
+
 contract_addresses_map = {
     # Ekubo
     "0x00000005dd3d2f4429af886cd1a3b08289dbcea99a294197e9eb43b0e0325b4b": "Ekubo Core",

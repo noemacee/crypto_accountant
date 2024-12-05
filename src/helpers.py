@@ -3,6 +3,9 @@ import pandas as pd
 from src.config import *
 from datetime import datetime
 from typing import Dict, Optional
+from tqdm import tqdm
+import pandas as pd
+from datetime import datetime
 from src.blastapi.builder.functions import (
     getWalletTokenTransfers,
     getTransaction,
@@ -210,12 +213,11 @@ def process_transactions(project_id, json_data, wallet_address):
     # Create records using the transaction hash mapping
     num_operations = len(token_transfers)
 
-    for operation_idx, tx in enumerate(token_transfers, start=1):
-
+    # Use tqdm for the progress bar
+    for operation_idx, tx in enumerate(
+        tqdm(token_transfers, desc="Processing transactions", unit="tx")
+    ):
         token_address = tx.get("contractAddress", "")
-        # print the transaction number
-        if (operation_idx % 10) == 0:
-            print(f"Handling Operation #{operation_idx} out of {num_operations}")
 
         if all(
             token_address not in token_dict or token_dict[token_address] == ""
