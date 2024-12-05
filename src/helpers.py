@@ -1,9 +1,9 @@
 import json
 import pandas as pd
-from config import *
+from src.config import *
 from datetime import datetime
 from typing import Dict, Optional
-from blastapi.builder.functions import (
+from src.blastapi.builder.functions import (
     getWalletTokenTransfers,
     getTransaction,
 )
@@ -30,9 +30,7 @@ def save_to_csv(df, output_file):
         print(f"Error saving to CSV: {e}")
 
 
-def fetch_all_pages(
-    project_id, wallet_address, page_size=100, output_file="wallet_token_transfers.json"
-):
+def fetch_all_pages(project_id, wallet_address, page_size=100):
     """
     Fetch all wallet token transfers by handling pagination.
     Combines all results into a single JSON file and avoids redundancy.

@@ -1,20 +1,22 @@
 import requests
 import os
+from dotenv import load_dotenv
 import json
 import argparse
 import pandas as pd
-from config import *
-from helpers import fetch_all_pages, save_to_csv, process_transactions
+from src.config import *
+from src.helpers import fetch_all_pages, save_to_csv, process_transactions
 
 
 # Main function
 def main(wallet_address: str):
     """Main execution function."""
     # File paths and wallet address
+    load_dotenv()
     project_id = os.getenv("PROJECT_ID")
+    print("Project ID:", project_id)
 
-    output_json_path = wallet_address + "_wallet_transactions.json"
-    output_csv_path = "../" + wallet_address + "_wallet_transactions.csv"
+    output_csv_path = "./" + wallet_address + "_wallet_transactions.csv"
 
     print("Fetching all token transfers...")
 
@@ -22,7 +24,6 @@ def main(wallet_address: str):
         project_id=project_id,
         wallet_address=wallet_address,
         page_size=PAGE_SIZE,
-        output_file=output_json_path,
     )
 
     if not json_data:
