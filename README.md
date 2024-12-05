@@ -35,11 +35,15 @@ This Python script helps crypto accountants manage data efficiently. The primary
    [OPTIONAL]
       First create a virtual environment in the cloned repository folder:
 
-      - python3 -m venv env
+      ```bash
+      python3 -m venv env
+      ```
 
       Activate the environment:
-
-      - source env/bin/activate
+   
+      ```bash
+      source env/bin/activate
+      ```
 
    
    Use the `requirements.txt` file to install the necessary packages:
