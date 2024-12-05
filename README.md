@@ -60,7 +60,7 @@ python src/run.py "<wallet_address>"
 If your wallet address is `0xabc123...`:
 
 ```bash
-python run.py "0xabc123..."
+python src/run.py "0xabc123..."
 ```
 
 A CSV file will be generated with all the transactions for the given wallet address.
