@@ -75,6 +75,7 @@ python run.py
 ### Example
 
 If your wallet address is `0xabc123...`:
+   WALLET_ADDRESSES = ["0xabc123..."] in config.py
 
 
 
