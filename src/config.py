@@ -27,12 +27,41 @@ protocol_addresses_map = {
     "0x073f6addc9339de9822cab4dac8c9431779c09077f02ba7bc36904ea342dd9eb": "Nostra",
     "0x059a943ca214c10234b9a3b61c558ac20c005127d183b86a99a8f3c60a08b4ff": "Nostra",
     "0x1bcfcb651e98317dc042cb34d0e0226c7f83bca309b6c54d8f0df6ee4e5f721": "Nostra",
+    "0x04327da17a67e92dcd37619b927a7ee962c92a951dc42f78598c54bf77db467a": "Nostra",
+    "0x0476e3589c53f1f0223cfe5129c80a03a9f7d32a69f7d9da2b6f70686bf685dc": "Nostra",
     # AVNU
     "0x04270219d365d6b017231b52e92b3fb5d7c8378b05e9abc97724537a80e93b0f": "AVNU",
     "0x0360fb3a51bd291e5db0892b6249918a5689bc61760adcb350fe39cd725e1d22": "AVNU",
     "0x0759c955b1cfddb8fcab93fddb0da1902d55bfe98bc4605ecb8cd4c635bc085b": "AVNU",
     # Starknet
     "0x01176a1bd84444c89232ec27754698e5d2e7e1a7f1539f12027f28b23ec9f3d8": "Starknet",
+}
+
+addresses2protocols_map = {
+    # Ekubo
+    "0x00000005dd3d2f4429af886cd1a3b08289dbcea99a294197e9eb43b0e0325b4b": "Ekubo",
+    "0x02e0af29598b407c8716b17f6d2795eca1b471413fa03fb145a5e33722184067": "Ekubo",
+    "0x07b696af58c967c1b14c9dde0ace001720635a660a8e90c565ea459345318b30": "Ekubo",
+    # Nostra
+    "0x073f6addc9339de9822cab4dac8c9431779c09077f02ba7bc36904ea342dd9eb": "Nostra",
+    "0x059a943ca214c10234b9a3b61c558ac20c005127d183b86a99a8f3c60a08b4ff": "Nostra",
+    "0x1bcfcb651e98317dc042cb34d0e0226c7f83bca309b6c54d8f0df6ee4e5f721": "Nostra",
+    "0x04327da17a67e92dcd37619b927a7ee962c92a951dc42f78598c54bf77db467a": "Nostra",
+    "0x0476e3589c53f1f0223cfe5129c80a03a9f7d32a69f7d9da2b6f70686bf685dc": "Nostra",
+    # AVNU
+    "0x04270219d365d6b017231b52e92b3fb5d7c8378b05e9abc97724537a80e93b0f": "AVNU",
+    "0x0360fb3a51bd291e5db0892b6249918a5689bc61760adcb350fe39cd725e1d22": "AVNU",
+    "0x0759c955b1cfddb8fcab93fddb0da1902d55bfe98bc4605ecb8cd4c635bc085b": "AVNU",
+}
+
+addresses2exchanges_map = {
+    # Ekubo
+    "0x04505a9f06f2bd639b6601f37a4dc0908bb70e8e0e0c34b1220827d64f4fc066": "Ekubo",
+    # Nostra
+    "0x040784ffdde08057a5957e64ed360c0ae4e04117b6d8e351c6bb912c09c5cbf5": "Nostra",
+    "0x01a2de9f2895ac4e6cb80c11ecc07ce8062a4ae883f64cb2b1dc6724b85e897d": "Nostra",
+    # AVNU
+    "0x04270219d365d6b017231b52e92b3fb5d7c8378b05e9abc97724537a80e93b0f": "AVNU",
 }
 
 # Pool contracts data

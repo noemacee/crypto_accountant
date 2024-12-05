@@ -102,6 +102,50 @@ def process_transaction_call(transaction: Dict) -> Optional[str]:
     return None
 
 
+def descriptionv2(df):
+    # Create column
+    if "Description" not in df.columns:
+        df.insert(
+            df.columns.get_loc("Amount currency")
+            + 1,  # Get the index after 'Amount currency'
+            "Description",  # Column name
+            "",  # Initialize with empty strings
+        )
+
+    # Condition 1: Transfer Fee
+    df.loc[df["transfer_type"] == "fee_transfer", "Description"] = "Transaction fee"
+
+    # Condition 2: DeFI Interest
+    df["Amount In"] = pd.to_numeric(df["Amount In"], errors="coerce")
+    df.loc[(df["call"] == "claim") & pd.notna(df["Amount In"]), "Description"] = (
+        "DeFi Interest"
+    )
+
+    # Condition 3 : DeFI Deposit
+    df.loc[df["transfer_to"].isin(addresses2protocols_map.keys()), "Description"] = (
+        "DeFi Deposit"
+    )
+
+    # Condition 4 : DeFI Withdrawal
+    df.loc[
+        df["transfer_from"].isin(addresses2protocols_map.keys())
+        & pd.notna(df["Amount In"]),
+        "Description",
+    ] = "DeFi Withdrawal"
+
+    # Condition 5 : Exchanges
+    df.loc[
+        df["Counterparty address"].isin(addresses2exchanges_map.keys()), "Description"
+    ] = "Exchange"
+
+    # Condition 6 : Transfer¨
+    df.loc[
+        (df["call"] == "transfer") & (df["Counterparty name"] == ""), "Description"
+    ] = "Transfer"
+
+    return df
+
+
 def call_column(hash: str, project_id: str) -> Optional[str]:
     """
     Main function to process transaction hash and return function name.
@@ -265,4 +309,6 @@ def process_transactions(project_id, json_data, wallet_address):
 
             # Concatenate the single-row DataFrame to the main DataFrame
             df = pd.concat([df, record_df], ignore_index=True)
+
+    df = descriptionv2(df)
     return df
