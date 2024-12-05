@@ -56,6 +56,8 @@ This Python script helps crypto accountants manage data efficiently. The primary
      PROJECT_ID=<your_project_id>
      ```
 
+   - To select wallets to create the csv from, add the wallet addresses you need in the config.py file in WALLET_ADDRESSES
+
 ---
 
 ## Usage
@@ -63,15 +65,13 @@ This Python script helps crypto accountants manage data efficiently. The primary
 To use the script, simply run the following command in your terminal:
 
 ```bash
-python src/run.py "<wallet_address>"
+python run.py 
 ```
 
 ### Example
 
 If your wallet address is `0xabc123...`:
 
-```bash
-python src/run.py "0xabc123..."
-```
+
 
 A CSV file will be generated with all the transactions for the given wallet address.
