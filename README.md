@@ -31,13 +31,24 @@ This Python script helps crypto accountants manage data efficiently. The primary
    ```
 
 2. **Install Dependencies**
+
+   [OPTIONAL]
+      First create a virtual environment in the cloned repository folder:
+
+      - python3 -m venv env
+
+      Activate the environment:
+
+      - source env/bin/activate
+
+   
    Use the `requirements.txt` file to install the necessary packages:
 
    ```bash
    pip install -r requirements.txt
    ```
 
-3. **Set Up Environment Variables**
+4. **Set Up Environment Variables**
    - A `.env.template` file is provided.
    - Rename it to `.env`:
    - Open the `.env` file in a text editor and replace `<PROJECT_ID>` with your actual project ID from BlastAPI:
