@@ -175,22 +175,15 @@ descriptionv2 = {
 address_to_call_function = {
     "0x83afd3f4caedc6eebf44246fe54e38c95e3179a5ec9ea81740eca5b482d12e": "transfer",
     "0x015511cc3694f64379908437d6d64458dc76d02482052bfb8a5b33a72c054c77": "withdraw",
-    "0x15511cc3694f64379908437d6d64458dc76d02482052bfb8a5b33a72c054c77": "withdraw",
     "0x02f0b3c5710379609eb5495f1ecd348cb28167711b73609fe565a72734550354": "mint",
-    "0x2f0b3c5710379609eb5495f1ecd348cb28167711b73609fe565a72734550354": "mint",  # Without the initial 0
     "0x03276861cf5e05d6daf8f352cabb47df623eb10c383ab742fcc7abea94d5c5cc": "swap_exact_tokens_for_tokens",
-    "0x3276861cf5e05d6daf8f352cabb47df623eb10c383ab742fcc7abea94d5c5cc": "swap_exact_tokens_for_tokens",  # Without the initial 0
     "0x01171593aa5bdadda4d6b0efde6cc94ee7649c3163d5efeb19da6c16d63a2a63": "multi_route_swap",
-    "0x1171593aa5bdadda4d6b0efde6cc94ee7649c3163d5efeb19da6c16d63a2a63": "multi_route_swap",  # Without the initial 0
     "0xb758361d5e84380ef1e632f89d8e76a8677dbc3f4b93a4f9d75d2a6048f312": "claim",
     "0x3e8cfd4725c1e28fa4a6e3e468b4fcf75367166b850ac5f04e33ec843e82c1": "burn",
     "0x02cfb12ff9e08412ec5009c65ea06e727119ad948d25c8a8cc2c86fec4adee70": "add_liquidity",
-    "0x2cfb12ff9e08412ec5009c65ea06e727119ad948d25c8a8cc2c86fec4adee70": "add_liquidity",  # Without the initial 0
     "0x02e875d1c86df033547c5c7839d8b6e3641de29ee1f708bbce99743b34272ada": "remove_liquidity",
-    "0x02e875d1c86df033547c5c7839d8b6e3641de29ee1f708bbce99743b34272ada": "remove_liquidity",  # Without the initial 0
     "0x02e1d93dafae32660a4a76a0fd6f31550f3ddfd6a51c29ef2e055b80afbbd011": "clear_minimum",
     "0x01b64b1b3b690b43b9b514fb81377518f4039cd3e4f4914d8a6bdf01d679fb19": "permissioned_mint (=handle_token_deposits)",
-    "0x1b64b1b3b690b43b9b514fb81377518f4039cd3e4f4914d8a6bdf01d679fb19": "permissioned_mint (=handle_token_deposits)",  # Without the initial 0
 }
 
 important_addresses = {
