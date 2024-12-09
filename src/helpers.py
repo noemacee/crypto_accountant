@@ -125,13 +125,13 @@ def descriptionv2(df):
     )
 
     # Condition 3 : DeFI Deposit
-    df.loc[df["transfer_to"].isin(addresses2protocols_map.keys()), "Description"] = (
+    df.loc[df["transfer_to"].isin(address_to_protocol.keys()), "Description"] = (
         "DeFi Deposit"
     )
 
     # Condition 4 : DeFI Withdrawal
     df.loc[
-        df["transfer_from"].isin(addresses2protocols_map.keys())
+        df["transfer_from"].isin(address_to_protocol.keys())
         & pd.notna(df["Amount In"]),
         "Description",
     ] = "DeFi Withdrawal"
@@ -246,7 +246,7 @@ def process_transactions(project_id, json_data, wallet_address):
                         "Nostra"
                         if counterparty_address
                         in interest_bearing_and_collat_tokens.keys()
-                        else protocol_addresses_map.get(counterparty_address)
+                        else address_to_protocol.get(counterparty_address)
                     )
                 )
             )
@@ -300,10 +300,10 @@ def process_transactions(project_id, json_data, wallet_address):
                         ),
                         "tx_hash": tx["transactionHash"],
                         "block_number": tx["blockNumber"],
-                        "from_alias": contract_addresses_map.get(
+                        "from_alias": address_to_contract_alias.get(
                             tx["fromAddress"]
                         ),  # Placeholder for alias mapping
-                        "to_alias": contract_addresses_map.get(tx["toAddress"]),
+                        "to_alias": address_to_contract_alias.get(tx["toAddress"]),
                         "timestamp": tx["blockTimestamp"],
                     }
                 ]
