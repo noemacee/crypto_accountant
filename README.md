@@ -33,34 +33,43 @@ This Python script helps crypto accountants manage data efficiently. The primary
 2. **Install Dependencies**
 
    [OPTIONAL]
-      First create a virtual environment in the cloned repository folder:
+   First create a virtual environment in the cloned repository folder:
 
-      ```bash
-      python3 -m venv env
-      ```
+   ```bash
+   python3 -m venv env
+   ```
 
-      Activate the environment:
-   
-      ```bash
-      source env/bin/activate
-      ```
+   Activate the environment:
 
-   
+   For MacOS/Linux
+
+   ```bash
+   source env/bin/activate
+   ```
+
+   For Windows
+
+   ```bash
+   .\env\Scripts\activate
+   ```
+
    Use the `requirements.txt` file to install the necessary packages:
 
    ```bash
    pip install -r requirements.txt
    ```
 
-4. **Set Up Environment Variables**
+3. **Set Up Environment Variables**
+
    - A `.env.template` file is provided.
    - Rename it to `.env`:
    - Open the `.env` file in a text editor and replace `<PROJECT_ID>` with your actual project ID from BlastAPI:
+
      ```plaintext
      PROJECT_ID=<your_project_id>
      ```
 
-   - To select wallets to create the csv from, add the wallet addresses you need in the config.py file in WALLET_ADDRESSES
+   - Add one or multiple wallet addresses in the config.py file (in WALLET_ADDRESSES) to create a .csv file for each of them.
 
 ---
 
@@ -69,14 +78,12 @@ This Python script helps crypto accountants manage data efficiently. The primary
 To use the script, simply run the following command in your terminal:
 
 ```bash
-python run.py 
+python run.py
 ```
 
 ### Example
 
 If your wallet address is `0xabc123...`:
-   WALLET_ADDRESSES = ["0xabc123..."] in config.py
-
-
+WALLET_ADDRESSES = ["0xabc123..."] in config.py
 
 A CSV file will be generated with all the transactions for the given wallet address.

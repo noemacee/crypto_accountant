@@ -6,9 +6,10 @@ import os
 from datetime import datetime
 import pandas as pd
 
-# Import the project_id variable from the .env file in the current directory or hard-code it
-project_id = os.getenv("PROJECT_ID")
-project_id = '76ae4a83-28b3-48dc-837c-f1c6fa25dd9a'
+# Normally no need to declare in this file
+project_id = ''
+#project_id = os.getenv("PROJECT_ID")
+#project_id = '76ae4a83-28b3-48dc-837c-f1c6fa25dd9a' 
 
 # Define global constants
 TRANSFER_EVENT = '0x99cd8bde557814842a3121e8ddfd433a539b8c9f14bf31ebf108d12e6196e9'
@@ -274,7 +275,6 @@ def process_transactions(json_data, wallet_address):
     """Process transactions into the required structure."""
 
     token_transfers = json_data["tokenTransfers"]
-    records = []
 
 
     # Create a mapping of transaction hash to transaction number

@@ -154,17 +154,6 @@ address_to_ic_token = {
 }
 
 
-# Will be used to map the contract address to the protocol name
-
-descriptionv2 = {
-    "DeFi Deposit": "",  # a transfer from wallet to a DeFi protocol
-    "DeFi Interest": "",  # claim call function
-    "DeFi Withdrawal": "",  #
-    "Exchange": "",  #
-    "Transaction fee": "",  # the transfer type is transfer_fee
-    "Transfer": "",  #
-}
-
 
 address_to_call_function = {
     "0x83afd3f4caedc6eebf44246fe54e38c95e3179a5ec9ea81740eca5b482d12e": "transfer",
@@ -180,10 +169,6 @@ address_to_call_function = {
     "0x01b64b1b3b690b43b9b514fb81377518f4039cd3e4f4914d8a6bdf01d679fb19": "permissioned_mint (=handle_token_deposits)",
 }
 
-important_addresses = {
-    "sergei": "0x035b6530ef09e227ca9f92efb66df12d0da9fface35ecd53b53a918c7d4eaa75",
-    "sequencer": "0x01176a1bd84444c89232ec27754698e5d2e7e1a7f1539f12027f28b23ec9f3d8",
-}
 
 exchanges = {
     "Nostra",
