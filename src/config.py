@@ -5,8 +5,12 @@ WALLET_ADDRESSES = [
     "0x035b6530ef09e227ca9f92efb66df12d0da9fface35ecd53b53a918c7d4eaa75",
 ]
 
+important_addresses = {
+    "sequencer": "0x01176a1bd84444c89232ec27754698e5d2e7e1a7f1539f12027f28b23ec9f3d8",
+}
 
-address_to_contract_alias = {
+
+address_to_contract_alias = { # Used for 'from_alias' and 'to_alias' columns
     # Ekubo
     "0x00000005dd3d2f4429af886cd1a3b08289dbcea99a294197e9eb43b0e0325b4b": "Ekubo Core",
     "0x02e0af29598b407c8716b17f6d2795eca1b471413fa03fb145a5e33722184067": "Ekubo Positions",
@@ -24,7 +28,7 @@ address_to_contract_alias = {
 }
 
 
-address_to_protocol = {
+address_to_protocol = { # Used for 'DeFi Deposit' and 'DeFi Withdrawal' descriptions.
     # Ekubo
     "0x00000005dd3d2f4429af886cd1a3b08289dbcea99a294197e9eb43b0e0325b4b": "Ekubo",
     "0x02e0af29598b407c8716b17f6d2795eca1b471413fa03fb145a5e33722184067": "Ekubo",
@@ -52,6 +56,9 @@ address_to_protocol = {
     "0x0759c955b1cfddb8fcab93fddb0da1902d55bfe98bc4605ecb8cd4c635bc085b": "AVNU",
     # Starknet
     "0x01176a1bd84444c89232ec27754698e5d2e7e1a7f1539f12027f28b23ec9f3d8": "Starknet",
+
+    # Binance
+    "0x0213c67ed78bc280887234fe5ed5e77272465317978ae86c25a71531d9332a2d": "Binance",
 }
 
 
@@ -69,7 +76,7 @@ addresses2exchanges_map = {
 
 # Pool contracts data
 
-address_to_pool = {
+address_to_pool = {# Used for "Nostra" in 'counterparty_name' column
     # Nostra : https://docs.nostra.finance/pools/deployed-contracts
     "0x068400056dccee818caa7e8a2c305f9a60d255145bac22d6c5c9bf9e2e046b71": "STRK/ETH",
     "0x07ae43abf704f4981094a4f3457d1abe6b176844f6cdfbb39c0544a635ef56b0": "STRK/USDC",

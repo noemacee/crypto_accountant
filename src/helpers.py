@@ -12,6 +12,7 @@ from src.blastapi.builder.functions import (
 )
 
 
+
 def save_to_json(data, filename):
     """
     Save json type data to a file.
@@ -116,7 +117,11 @@ def descriptionv2(df):
         )
 
     # Condition 1: Transfer Fee
-    df.loc[df["transfer_type"] == "fee_transfer", "Description"] = "Transaction fee"
+    #df.loc[df["transfer_type"] == "fee_transfer", "Description"] = "Transaction fee"
+    df.loc[
+        df["transfer_to"] == important_addresses["sequencer"],
+        "Description"
+    ] = "Transaction Fee"
 
     # Condition 2: DeFI Interest
     df["Amount In"] = pd.to_numeric(df["Amount In"], errors="coerce")
@@ -125,14 +130,16 @@ def descriptionv2(df):
     )
 
     # Condition 3 : DeFI Deposit
-    df.loc[df["transfer_to"].isin(address_to_protocol.keys()), "Description"] = (
-        "DeFi Deposit"
-    )
+    df.loc[
+        df["transfer_to"].isin(
+            [key for key in address_to_protocol.keys() if key != important_addresses["sequencer"]]
+        ),
+        "Description"
+    ] = "DeFi Deposit"
 
     # Condition 4 : DeFI Withdrawal
     df.loc[
-        df["transfer_from"].isin(address_to_protocol.keys())
-        & pd.notna(df["Amount In"]),
+        df["transfer_from"].isin(key for key in address_to_protocol.keys() if key != important_addresses["sequencer"]) & pd.notna(df["Amount In"]),
         "Description",
     ] = "DeFi Withdrawal"
 
@@ -237,17 +244,10 @@ def process_transactions(project_id, json_data, wallet_address):
             )
 
             counterparty_name = (
-                "Nostra"
-                if counterparty_address in address_to_pool.keys()
-                else (
-                    "Nostra"
-                    if counterparty_address in address_to_debt_token.keys()
-                    else (
-                        "Nostra"
-                        if counterparty_address in address_to_ibc_token.keys()
-                        else address_to_protocol.get(counterparty_address)
-                    )
-                )
+                "Nostra" if counterparty_address in address_to_pool # Nostra Pool
+                else "Nostra" if counterparty_address in address_to_debt_token # Nostra Debt
+                else "Nostra" if counterparty_address in address_to_ibc_token # Nostra IBC (should delete as these are token addresses)
+                else address_to_protocol.get(counterparty_address)
             )
 
             # Create a single-row DataFrame for the current operation
