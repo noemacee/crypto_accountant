@@ -99,8 +99,8 @@ def process_transaction_call(transaction: Dict) -> Optional[str]:
     # Normalize and check calldata against function map
     for call in transaction["calldata"]:
         normalized_call = address_converter(call)
-        if normalized_call in call_func_addresses:
-            return call_func_addresses[normalized_call]
+        if normalized_call in address_to_call_function:
+            return address_to_call_function[normalized_call]
 
     return None
 
@@ -222,9 +222,9 @@ def process_transactions(project_id, json_data, wallet_address):
         if all(
             token_address not in token_dict or token_dict[token_address] == ""
             for token_dict in [
-                pool_tokens,
-                debt_tokens,
-                interest_bearing_and_collat_tokens,
+                address_to_pool,
+                address_to_debt_token,
+                address_to_ibc_token,
             ]
         ):
 
@@ -238,14 +238,13 @@ def process_transactions(project_id, json_data, wallet_address):
 
             counterparty_name = (
                 "Nostra"
-                if counterparty_address in pool_tokens.keys()
+                if counterparty_address in address_to_pool.keys()
                 else (
                     "Nostra"
-                    if counterparty_address in debt_tokens.keys()
+                    if counterparty_address in address_to_debt_token.keys()
                     else (
                         "Nostra"
-                        if counterparty_address
-                        in interest_bearing_and_collat_tokens.keys()
+                        if counterparty_address in address_to_ibc_token.keys()
                         else address_to_protocol.get(counterparty_address)
                     )
                 )

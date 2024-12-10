@@ -23,32 +23,23 @@ address_to_contract_alias = {
     "0x01176a1bd84444c89232ec27754698e5d2e7e1a7f1539f12027f28b23ec9f3d8": "StarkWare: Sequencer",
 }
 
-"""""
-protocol_addresses_map = {
-# Ekubo
-"0x00000005dd3d2f4429af886cd1a3b08289dbcea99a294197e9eb43b0e0325b4b": "Ekubo",
-"0x02e0af29598b407c8716b17f6d2795eca1b471413fa03fb145a5e33722184067": "Ekubo",
-"0x07b696af58c967c1b14c9dde0ace001720635a660a8e90c565ea459345318b30": "Ekubo",
-# Nostra
-"0x073f6addc9339de9822cab4dac8c9431779c09077f02ba7bc36904ea342dd9eb": "Nostra",
-"0x059a943ca214c10234b9a3b61c558ac20c005127d183b86a99a8f3c60a08b4ff": "Nostra",
-"0x1bcfcb651e98317dc042cb34d0e0226c7f83bca309b6c54d8f0df6ee4e5f721": "Nostra",
-"0x04327da17a67e92dcd37619b927a7ee962c92a951dc42f78598c54bf77db467a": "Nostra",
-"0x0476e3589c53f1f0223cfe5129c80a03a9f7d32a69f7d9da2b6f70686bf685dc": "Nostra",
-# AVNU
-"0x04270219d365d6b017231b52e92b3fb5d7c8378b05e9abc97724537a80e93b0f": "AVNU",
-"0x0360fb3a51bd291e5db0892b6249918a5689bc61760adcb350fe39cd725e1d22": "AVNU",
-"0x0759c955b1cfddb8fcab93fddb0da1902d55bfe98bc4605ecb8cd4c635bc085b": "AVNU",
-# Starknet
-"0x01176a1bd84444c89232ec27754698e5d2e7e1a7f1539f12027f28b23ec9f3d8": "Starknet",
-}
-"""
 
 address_to_protocol = {
     # Ekubo
     "0x00000005dd3d2f4429af886cd1a3b08289dbcea99a294197e9eb43b0e0325b4b": "Ekubo",
     "0x02e0af29598b407c8716b17f6d2795eca1b471413fa03fb145a5e33722184067": "Ekubo",
     "0x07b696af58c967c1b14c9dde0ace001720635a660a8e90c565ea459345318b30": "Ekubo",
+    # Immutable EKUBO contracts
+    "0x0199741822c2dc722f6f605204f35e56dbc23bceed54818168c4c49e4fb8737e": "Ekubo",  # Router V3.0.13
+    "0x04505a9f06f2bd639b6601f37a4dc0908bb70e8e0e0c34b1220827d64f4fc066": "Ekubo",  # Router V3.0.3
+    "0x03266fe47923e1500aec0fa973df8093b5850bbce8dcd0666d3f47298b4b806e": "Ekubo",  # Router V2.0.1
+    "0x010c7eb57cbfeb18bde525912c1b6e9a7ebb4f692e0576af1ba7be8b3b9a70f6": "Ekubo",  # Router V2
+    "0x01b6f560def289b32e2a7b0920909615531a4d9d5636ca509045843559dc23d5": "Ekubo",  #
+    "0x064bdb4094881140bc39340146c5fcc5a187a98aec5a53f448ac702e5de5067e": "Ekubo",  #
+    "0x0013e25867b6eef62703735aa4cfa7754e72f4e94a56c9d3d9ad8ebe86cee4aa": "Ekubo",  #
+    "0x006f55e718ae592b22117c3e3b557b6b2b5f827ddcd7e6fdebd1a4ce7462c93e": "Ekubo",  #
+    "0x00f2e9a400ba65b13255ef2792612b45d5a20a7a7cf211ffb3f485445022ef72": "Ekubo",  #
+    "0x04946fb4ad5237d97bbb1256eba2080c4fe1de156da6a7f83e3b4823bb6d7da1": "Ekubo",  #
     # Nostra
     "0x073f6addc9339de9822cab4dac8c9431779c09077f02ba7bc36904ea342dd9eb": "Nostra",
     "0x059a943ca214c10234b9a3b61c558ac20c005127d183b86a99a8f3c60a08b4ff": "Nostra",
@@ -64,14 +55,15 @@ address_to_protocol = {
 }
 
 
+## These are a mix of various maps : to remove
 addresses2exchanges_map = {
     # Ekubo
-    "0x04505a9f06f2bd639b6601f37a4dc0908bb70e8e0e0c34b1220827d64f4fc066": "Ekubo",
+    "0x04505a9f06f2bd639b6601f37a4dc0908bb70e8e0e0c34b1220827d64f4fc066": "Ekubo",  # Unknown Address to understand
     # Nostra
-    "0x040784ffdde08057a5957e64ed360c0ae4e04117b6d8e351c6bb912c09c5cbf5": "Nostra",
-    "0x01a2de9f2895ac4e6cb80c11ecc07ce8062a4ae883f64cb2b1dc6724b85e897d": "Nostra",
+    "0x040784ffdde08057a5957e64ed360c0ae4e04117b6d8e351c6bb912c09c5cbf5": "Nostra",  # Unknown Address to understand
+    "0x01a2de9f2895ac4e6cb80c11ecc07ce8062a4ae883f64cb2b1dc6724b85e897d": "Nostra",  # Strk/Eth Degen
     # AVNU
-    "0x04270219d365d6b017231b52e92b3fb5d7c8378b05e9abc97724537a80e93b0f": "AVNU",
+    "0x04270219d365d6b017231b52e92b3fb5d7c8378b05e9abc97724537a80e93b0f": "AVNU",  # AVNU Exchange address.
 }
 
 
@@ -125,6 +117,7 @@ address_to_debt_token = {
     "0x073fa792a8ad45303db3651c34176dc419bee98bfe45791ab12f884201a90ae2": "EKUBO",
 }
 
+
 # ibc = interest bearing collaterals
 address_to_ibc_token = {
     # Nostra : https://docs.nostra.finance/lend-and-borrow/deployed-contracts/money-market-mainnet
@@ -172,6 +165,7 @@ descriptionv2 = {
     "Transfer": "",  #
 }
 
+
 address_to_call_function = {
     "0x83afd3f4caedc6eebf44246fe54e38c95e3179a5ec9ea81740eca5b482d12e": "transfer",
     "0x015511cc3694f64379908437d6d64458dc76d02482052bfb8a5b33a72c054c77": "withdraw",
@@ -189,4 +183,10 @@ address_to_call_function = {
 important_addresses = {
     "sergei": "0x035b6530ef09e227ca9f92efb66df12d0da9fface35ecd53b53a918c7d4eaa75",
     "sequencer": "0x01176a1bd84444c89232ec27754698e5d2e7e1a7f1539f12027f28b23ec9f3d8",
+}
+
+exchanges = {
+    "Nostra",
+    "Ekubo",
+    "AVNU",
 }
