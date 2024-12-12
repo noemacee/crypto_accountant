@@ -2,7 +2,7 @@ PAGE_SIZE = 100
 
 
 WALLET_ADDRESSES = [
-    "0x035b6530ef09e227ca9f92efb66df12d0da9fface35ecd53b53a918c7d4eaa75",
+    "0x035c36258fffc1da38afcab896a0967ee6997157f42311757e808509226fe5a1",
 ]
 
 important_addresses = {
@@ -59,6 +59,11 @@ address_to_protocol = { # Used for 'DeFi Deposit' and 'DeFi Withdrawal' descript
 
     # Binance
     "0x0213c67ed78bc280887234fe5ed5e77272465317978ae86c25a71531d9332a2d": "Binance",
+
+    # PK Labs
+    "0x035c36258fffc1da38afcab896a0967ee6997157f42311757e808509226fe5a1": "PK Labs", 
+    "0x01355a4c0a859f3f4e163e7700f6034bda0de11e55eb64978f6fd914001a54b0": "PK Labs",
+    "0x035b6530ef09e227ca9f92efb66df12d0da9fface35ecd53b53a918c7d4eaa75": "PK Labs"
 }
 
 
