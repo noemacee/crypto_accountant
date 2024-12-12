@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Crypto Wallet Processor</title>
+  </head>
+  <body>
+    <h1>Crypto Wallet Processor</h1>
+    <form id="walletForm">
+      <label for="wallet_address">Enter Wallet Address:</label>
+      <input type="text" id="wallet_address" name="wallet_address" required />
+      <button type="submit">Process Wallet</button>
+    </form>
+    <p id="response"></p>
+
+    <script>
+      const form = document.getElementById("walletForm");
+      form.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        const formData = new FormData(form);
+        const walletAddress = formData.get("wallet_address");
+
+        if (!walletAddress) {
+          document.getElementById("response").textContent =
+            "Wallet address is required!";
+          return;
+        }
+
+        try {
+          const response = await fetch("/process_wallet", {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: `wallet_address=${encodeURIComponent(walletAddress)}`,
+          });
+
+          const result = await response.json();
+          document.getElementById("response").textContent =
+            result.message || result.error;
+        } catch (error) {
+          console.error("Error:", error);
+          document.getElementById("response").textContent =
+            "An error occurred.";
+        }
+      });
+    </script>
+  </body>
+</html>
