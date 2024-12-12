@@ -2,7 +2,7 @@ PAGE_SIZE = 100
 
 
 WALLET_ADDRESSES = [
-    "0x035c36258fffc1da38afcab896a0967ee6997157f42311757e808509226fe5a1",
+    "0x035b6530ef09e227ca9f92efb66df12d0da9fface35ecd53b53a918c7d4eaa75",
 ]
 
 important_addresses = {
@@ -62,6 +62,9 @@ address_to_protocol = { # Used for 'DeFi Deposit' and 'DeFi Withdrawal' descript
     # Binance
     "0x0213c67ed78bc280887234fe5ed5e77272465317978ae86c25a71531d9332a2d": "Binance",
 
+    # Mint / Bridge
+    "0x0000000000000000000000000000000000000000000000000000000000000000": "Mint (Bridge)"
+
     # PK Labs
     "0x035c36258fffc1da38afcab896a0967ee6997157f42311757e808509226fe5a1": "PK Labs", 
     "0x01355a4c0a859f3f4e163e7700f6034bda0de11e55eb64978f6fd914001a54b0": "PK Labs",
@@ -111,7 +114,8 @@ address_to_pool = {# Used for "Nostra" in 'counterparty_name' column
     "0x076def79cc9a3a375779c163ad12996f99fbeb4acd68d7041529159bde897160": "nstSTRK/STRK",
     "0x03f8c9062f1bfe45f82cd70ed97ff053bc5836783ec66adfe3288eb1b43aa83b": "ETH/UNO",
     "0x03d51776d3ce07c211d5dbdf40a9333ec6d6d3a0b2853de1d6706f9ea3b88d45": "STRK/UNO",
-    "0x01a2de9f2895ac4e6cb80c11ecc07ce8062a4ae883f64cb2b1dc6724b85e897d": "STRK/ETH (Degen)",
+    "0x01a2de9f2895ac4e6cb80c11ecc07ce8062a4ae883f64cb2b1dc6724b85e897d": "STRK/ETH (Degen)", # Step 1
+    "0x040784ffdde08057a5957e64ed360c0ae4e04117b6d8e351c6bb912c09c5cbf5": "STRK/ETH (Degen)", # Step 2
     "0x042543c7d220465bd3f8f42314b51f4f3a61d58de3770523b281da61dbf27c8a": "STRK/USDC (Degen)",
     "0x05e03162008d76cf645fe53c6c13a7a5fce745e8991c6ffe94400d60e44c210a": "ETH/USDC (Degen)",
     "0x01583919ffd78e87fa28fdf6b6a805fe3ddf52f754a63721dcd4c258211129a6": "WBTC/ETH (Degen)",
