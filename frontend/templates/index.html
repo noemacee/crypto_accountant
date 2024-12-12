@@ -4,44 +4,152 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Crypto Wallet Processor</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+      }
+      form {
+        margin-bottom: 20px;
+      }
+      #response,
+      #statsResponse {
+        margin-top: 20px;
+      }
+      .json-link {
+        color: blue;
+        text-decoration: underline;
+        cursor: pointer;
+      }
+    </style>
   </head>
   <body>
     <h1>Crypto Wallet Processor</h1>
+
+    <!-- Wallet Processing Form -->
+    <h2>Process a Wallet</h2>
     <form id="walletForm">
-      <label for="wallet_address">Enter Wallet Address:</label>
+      <label for="api_key">API Key:</label>
+      <input type="text" id="api_key" name="api_key" required />
+      <br /><br />
+      <label for="wallet_address">Wallet Address:</label>
       <input type="text" id="wallet_address" name="wallet_address" required />
+      <br /><br />
       <button type="submit">Process Wallet</button>
     </form>
-    <p id="response"></p>
+
+    <div id="response"></div>
+
+    <!-- API Usage Statistics Form -->
+    <h2>View Usage Statistics</h2>
+    <form id="statsForm">
+      <label for="api_key_stats">API Key:</label>
+      <input type="text" id="api_key_stats" name="api_key" required />
+      <button type="submit">Get Stats</button>
+    </form>
+
+    <div id="statsResponse"></div>
 
     <script>
-      const form = document.getElementById("walletForm");
-      form.addEventListener("submit", async (event) => {
+      // Wallet Processing Logic
+      const walletForm = document.getElementById("walletForm");
+      const responseDiv = document.getElementById("response");
+
+      walletForm.addEventListener("submit", async (event) => {
         event.preventDefault();
 
-        const formData = new FormData(form);
-        const walletAddress = formData.get("wallet_address");
+        const apiKey = document.getElementById("api_key").value;
+        const walletAddress = document.getElementById("wallet_address").value;
 
-        if (!walletAddress) {
-          document.getElementById("response").textContent =
-            "Wallet address is required!";
+        if (!apiKey || !walletAddress) {
+          responseDiv.innerHTML =
+            "<p style='color: red;'>Both API key and wallet address are required!</p>";
           return;
         }
 
         try {
+          // Send request to the backend API
           const response = await fetch("/process_wallet", {
             method: "POST",
             headers: { "Content-Type": "application/x-www-form-urlencoded" },
-            body: `wallet_address=${encodeURIComponent(walletAddress)}`,
+            body: new URLSearchParams({
+              api_key: apiKey,
+              wallet_address: walletAddress,
+            }),
           });
 
           const result = await response.json();
-          document.getElementById("response").textContent =
-            result.message || result.error;
+
+          if (response.ok) {
+            responseDiv.innerHTML = `
+              <p>${result.message}</p>
+              ${
+                result.csv_path
+                  ? `<p>
+                    <a href="/download_csv?path=${encodeURIComponent(
+                      result.csv_path
+                    )}"
+                       class="json-link" target="_blank">Download CSV File</a>
+                  </p>`
+                  : ""
+              }
+            `;
+          } else {
+            responseDiv.innerHTML = `<p style="color: red;">${
+              result.error || result.message
+            }</p>`;
+          }
         } catch (error) {
           console.error("Error:", error);
-          document.getElementById("response").textContent =
-            "An error occurred.";
+          responseDiv.innerHTML =
+            '<p style="color: red;">An error occurred. Please try again.</p>';
+        }
+      });
+
+      // API Usage Statistics Logic
+      const statsForm = document.getElementById("statsForm");
+      const statsResponseDiv = document.getElementById("statsResponse");
+
+      statsForm.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        const apiKey = document.getElementById("api_key_stats").value;
+
+        if (!apiKey) {
+          statsResponseDiv.innerHTML =
+            "<p style='color: red;'>API key is required to view stats!</p>";
+          return;
+        }
+
+        try {
+          // Fetch usage stats from the backend
+          const response = await fetch(
+            `/usage_stats?api_key=${encodeURIComponent(apiKey)}`
+          );
+
+          const result = await response.json();
+
+          if (response.ok) {
+            statsResponseDiv.innerHTML = `
+              <p>Usage Stats:</p>
+              <ul>
+                ${result.usage
+                  .map(
+                    (stat) =>
+                      `<li>Endpoint: ${stat.endpoint}, Count: ${stat.count}</li>`
+                  )
+                  .join("")}
+              </ul>
+            `;
+          } else {
+            statsResponseDiv.innerHTML = `<p style="color: red;">${
+              result.error || result.message
+            }</p>`;
+          }
+        } catch (error) {
+          console.error("Error:", error);
+          statsResponseDiv.innerHTML =
+            '<p style="color: red;">An error occurred. Please try again.</p>';
         }
       });
     </script>

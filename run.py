@@ -2,7 +2,6 @@
 import os
 from dotenv import load_dotenv
 
-# import pandas as pd
 from src.config import WALLET_ADDRESSES, PAGE_SIZE
 from src.helpers import fetch_all_pages, save_to_csv, process_transactions
 
