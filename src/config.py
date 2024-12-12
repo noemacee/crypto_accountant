@@ -29,31 +29,33 @@ address_to_contract_alias = { # Used for 'from_alias' and 'to_alias' columns
 
 
 address_to_protocol = { # Used for 'DeFi Deposit' and 'DeFi Withdrawal' descriptions.
-    # Ekubo
-    "0x00000005dd3d2f4429af886cd1a3b08289dbcea99a294197e9eb43b0e0325b4b": "Ekubo",
-    "0x02e0af29598b407c8716b17f6d2795eca1b471413fa03fb145a5e33722184067": "Ekubo",
-    "0x07b696af58c967c1b14c9dde0ace001720635a660a8e90c565ea459345318b30": "Ekubo",
-    # Immutable EKUBO contracts
+    # Ekubo : https://docs.ekubo.org/integration-guides/reference/contract-addresses
+
+    # Ekubo Upgradeable contracts
+    "0x00000005dd3d2f4429af886cd1a3b08289dbcea99a294197e9eb43b0e0325b4b": "Ekubo", # Core
+    "0x02e0af29598b407c8716b17f6d2795eca1b471413fa03fb145a5e33722184067": "Ekubo", # Positions
+    "0x07b696af58c967c1b14c9dde0ace001720635a660a8e90c565ea459345318b30": "Ekubo", # Positions NFT
+    # Ekubo Immutable  contracts
     "0x0199741822c2dc722f6f605204f35e56dbc23bceed54818168c4c49e4fb8737e": "Ekubo",  # Router V3.0.13
     "0x04505a9f06f2bd639b6601f37a4dc0908bb70e8e0e0c34b1220827d64f4fc066": "Ekubo",  # Router V3.0.3
     "0x03266fe47923e1500aec0fa973df8093b5850bbce8dcd0666d3f47298b4b806e": "Ekubo",  # Router V2.0.1
     "0x010c7eb57cbfeb18bde525912c1b6e9a7ebb4f692e0576af1ba7be8b3b9a70f6": "Ekubo",  # Router V2
-    "0x01b6f560def289b32e2a7b0920909615531a4d9d5636ca509045843559dc23d5": "Ekubo",  #
-    "0x064bdb4094881140bc39340146c5fcc5a187a98aec5a53f448ac702e5de5067e": "Ekubo",  #
-    "0x0013e25867b6eef62703735aa4cfa7754e72f4e94a56c9d3d9ad8ebe86cee4aa": "Ekubo",  #
-    "0x006f55e718ae592b22117c3e3b557b6b2b5f827ddcd7e6fdebd1a4ce7462c93e": "Ekubo",  #
-    "0x00f2e9a400ba65b13255ef2792612b45d5a20a7a7cf211ffb3f485445022ef72": "Ekubo",  #
-    "0x04946fb4ad5237d97bbb1256eba2080c4fe1de156da6a7f83e3b4823bb6d7da1": "Ekubo",  #
-    # Nostra
-    "0x073f6addc9339de9822cab4dac8c9431779c09077f02ba7bc36904ea342dd9eb": "Nostra",
-    "0x059a943ca214c10234b9a3b61c558ac20c005127d183b86a99a8f3c60a08b4ff": "Nostra",
-    "0x1bcfcb651e98317dc042cb34d0e0226c7f83bca309b6c54d8f0df6ee4e5f721": "Nostra",
-    "0x04327da17a67e92dcd37619b927a7ee962c92a951dc42f78598c54bf77db467a": "Nostra",
-    "0x0476e3589c53f1f0223cfe5129c80a03a9f7d32a69f7d9da2b6f70686bf685dc": "Nostra",
+    "0x01b6f560def289b32e2a7b0920909615531a4d9d5636ca509045843559dc23d5": "Ekubo",  # Router
+    "0x064bdb4094881140bc39340146c5fcc5a187a98aec5a53f448ac702e5de5067e": "Ekubo",  # Token Registry V3 (supports ByteArray)
+    "0x0013e25867b6eef62703735aa4cfa7754e72f4e94a56c9d3d9ad8ebe86cee4aa": "Ekubo",  # Token Registry V2
+    "0x006f55e718ae592b22117c3e3b557b6b2b5f827ddcd7e6fdebd1a4ce7462c93e": "Ekubo",  # Token Registry V1 (Legacy)
+    "0x00f2e9a400ba65b13255ef2792612b45d5a20a7a7cf211ffb3f485445022ef72": "Ekubo",  # Revenue buybacks v1.0.0
+    "0x04946fb4ad5237d97bbb1256eba2080c4fe1de156da6a7f83e3b4823bb6d7da1": "Ekubo",  # Price Fetcher
+    # Ekubo Governance contracts
+    "0x075afe6402ad5a5c20dd25e10ec3b3986acaa647b77e4ae24b0cbc9a54a27a87": "Ekubo", # Ekubo
+    "0x02a3ed03046e1042e193651e3da6d3c973e3d45c624442be936a374380a78bb5": "Ekubo", # Staker
+    "0x053499f7aa2706395060fe72d00388803fb2dcc111429891ad7b2d9dcea29acd": "Ekubo", # Governor
+
     # AVNU
     "0x04270219d365d6b017231b52e92b3fb5d7c8378b05e9abc97724537a80e93b0f": "AVNU",
     "0x0360fb3a51bd291e5db0892b6249918a5689bc61760adcb350fe39cd725e1d22": "AVNU",
     "0x0759c955b1cfddb8fcab93fddb0da1902d55bfe98bc4605ecb8cd4c635bc085b": "AVNU",
+
     # Starknet
     "0x01176a1bd84444c89232ec27754698e5d2e7e1a7f1539f12027f28b23ec9f3d8": "Starknet",
 
@@ -63,7 +65,18 @@ address_to_protocol = { # Used for 'DeFi Deposit' and 'DeFi Withdrawal' descript
     # PK Labs
     "0x035c36258fffc1da38afcab896a0967ee6997157f42311757e808509226fe5a1": "PK Labs", 
     "0x01355a4c0a859f3f4e163e7700f6034bda0de11e55eb64978f6fd914001a54b0": "PK Labs",
-    "0x035b6530ef09e227ca9f92efb66df12d0da9fface35ecd53b53a918c7d4eaa75": "PK Labs"
+    "0x035b6530ef09e227ca9f92efb66df12d0da9fface35ecd53b53a918c7d4eaa75": "PK Labs",
+
+    # Nostra
+    # Nostra Core contracts
+    "0x073f6addc9339de9822cab4dac8c9431779c09077f02ba7bc36904ea342dd9eb": "Nostra", # Lend/Borrow - CDP Manager
+    "0x059a943ca214c10234b9a3b61c558ac20c005127d183b86a99a8f3c60a08b4ff": "Nostra", # Lend/Borrow - Interest Rate Model
+    "0x073f6addc9339de9822cab4dac8c9431779c09077f02ba7bc36904ea342dd9eb": "Nostra", # Lend/Borrow - Deferred Batch Call Adapter
+    "0x1bcfcb651e98317dc042cb34d0e0226c7f83bca309b6c54d8f0df6ee4e5f721": "Nostra", # Lend/Borrow - Flash Loan Adapter
+
+    "0x1bcfcb651e98317dc042cb34d0e0226c7f83bca309b6c54d8f0df6ee4e5f721": "Nostra",
+    "0x02a93ef8c7679a5f9b1fcf7286a6e1cadf2e9192be4bcb5cb2d1b39062697527": "Nostra", # Pool - Factory
+    "0x049ff5b3a7d38e2b50198f408fa8281635b5bc81ee49ab87ac36c8324c214427": "Nostra", # Pool - Router
 }
 
 
@@ -109,9 +122,6 @@ address_to_pool = {# Used for "Nostra" in 'counterparty_name' column
 }
 
 
-#
-
-
 address_to_debt_token = {
     # Nostra : https://docs.nostra.finance/lend-and-borrow/deployed-contracts/money-market-mainnet
     "0x0491480f21299223b9ce770f23a2c383437f9fbf57abc2ac952e9af8cdb12c97": "WBTC",
@@ -147,24 +157,45 @@ address_to_ibc_token = {
     "0x02360bd006d42c1a17d23ebe7ae246a0764dea4ac86201884514f86754ccc7b8": "EKUBO",
 }
 
-# ic = interest collaterals
-address_to_ic_token = {
+# ib = interest bearing
+address_to_ib_token = {
     # Nostra : https://docs.nostra.finance/lend-and-borrow/deployed-contracts/money-market-mainnet
-    "": "WBTC",
-    "": "ETH",
-    "": "USDC",
-    "": "DAIv0",
-    "": "UDST",
-    "": "wstETH",
-    "": "LORDS",
-    "": "STRK",
-    "": "nstSTRK",
-    "": "UNO",
-    "": "NSTR",
-    "": "DAI",
-    "": "EKUBO",
+    "0x0735d0f09a4e8bf8a17005fa35061b5957dcaa56889fc75df9e94530ff6991ea": "WBTC",
+    "0x01fecadfe7cda2487c66291f2970a629be8eecdcb006ba4e71d1428c2b7605c7": "ETH",
+    "0x002fc2d4b41cc1f03d185e6681cbd40cced61915d4891517a042658d61cba3b1": "USDC",
+    "0x022ccca3a16c9ef0df7d56cbdccd8c4a6f98356dfd11abc61a112483b242db90": "DAIv0",
+    "0x0360f9786a6595137f84f2d6931aaec09ceec476a94a98dcad2bb092c6c06701": "UDST",
+    "0xca44c79a77bcb186f8cdd1a0cd222cc258bebc3bec29a0a020ba20fdca40e9": "wstETH",
+    "0x507eb06dd372cb5885d3aaf18b980c41cd3cd4691cfd3a820339a6c0cec2674": "LORDS",
+    "0x26c5994c2462770bbf940552c5824fb0e0920e2a8a5ce1180042da1b3e489db": "STRK",
+    "0x78a40c85846e3303bf7982289ca7def68297d4b609d5f588208ac553cff3a18": "nstSTRK",
+    "0x01325caf7c91ee415b8df721fb952fa88486a0fc250063eafddd5d3c67867ce7": "UNO",
+    "0x2589fc11f60f21af6a1dda3aeb7a44305c552928af122f2834d1c3b1a7aa626": "NSTR",
+    "0x65bde349f553cf4bdd873e54cd48317eda0542764ebe5ba46984cedd940a5e4": "DAI",
+    "0x6fd4a9efd0c884e0b29506169dd2fcad6b284d5bdbd46ede424abc26d71164": "EKUBO",
 }
 
+
+address_to_collateral_token = {
+    # Nostra : https://docs.nostra.finance/lend-and-borrow/deployed-contracts/money-market-mainnet
+    "0x036b68238f3a90639d062669fdec08c4d0bdd09826b1b6d24ef49de6d8141eaa": "WBTC",
+    "0x044debfe17e4d9a5a1e226dabaf286e72c9cc36abbe71c5b847e669da4503893": "ETH",
+    "0x05f296e1b9f4cf1ab452c218e72e02a8713cee98921dad2d3b5706235e128ee4": "USDC",
+    "0x005c4676bcb21454659479b3cd0129884d914df9c9b922c1c649696d2e058d70": "DAIv0",
+    "0x0514bd7ee8c97d4286bd481c54aa0793e43edbfb7e1ab9784c4b30469dcf9313": "UDST",
+    "0x5eb6de9c7461b3270d029f00046c8a10d27d4f4a4c931a4ea9769c72ef4edbb": "wstETH",
+    "0x2530a305dd3d92aad5cf97e373a3d07577f6c859337fb0444b9e851ee4a2dd4": "LORDS",
+    "0x40f5a6b7a6d3c472c12ca31ae6250b462c6d35bbdae17bd52f6c6ca065e30cf": "STRK",
+    "0x0142af5b6c97f02cac9c91be1ea9895d855c5842825cb2180673796e54d73dc5": "nstSTRK",
+    "0x7d717fb27c9856ea10068d864465a2a8f9f669f4f78013967de06149c09b9af": "UNO",
+    "0x6f8ad459c712873993e9ffb9013a469248343c3d361e4d91a8cac6f98575834": "NSTR",
+    "0x6726ec97bae4e28efa8993a8e0853bd4bad0bd71de44c23a1cd651b026b00e7": "DAI",
+    "0x6b1063a4d5c32fef3486bf29d1719eb09481b52d31f7d86a50c64b0b8d5defb": "EKUBO",
+}
+
+address_to_liquid_staking = {
+    "0x04619e9ce4109590219c5263787050726be63382148538f3f936c22aa87d2fc2": "nstSTRK"
+}
 
 
 address_to_call_function = {
@@ -179,11 +210,4 @@ address_to_call_function = {
     "0x02e875d1c86df033547c5c7839d8b6e3641de29ee1f708bbce99743b34272ada": "remove_liquidity",
     "0x02e1d93dafae32660a4a76a0fd6f31550f3ddfd6a51c29ef2e055b80afbbd011": "clear_minimum",
     "0x01b64b1b3b690b43b9b514fb81377518f4039cd3e4f4914d8a6bdf01d679fb19": "permissioned_mint (=handle_token_deposits)",
-}
-
-
-exchanges = {
-    "Nostra",
-    "Ekubo",
-    "AVNU",
 }
