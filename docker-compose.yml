@@ -21,7 +21,7 @@ services:
     ports:
       - "5001:5000"  # Backend runs on port 5000
     environment:
-      - PROJECT_ID=your_project_id  # Replace with actual value
+      - PROJECT_ID=76ae4a83-28b3-48dc-837c-f1c6fa25dd9a  # Replace with actual value
       - DATABASE_URL=postgresql://user:password@db:5432/accounter_db  # Point backend to database
     volumes:
       - ./backend:/app  # Mount backend code for live updates (optional)

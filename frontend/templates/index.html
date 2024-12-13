@@ -4,51 +4,76 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Crypto Wallet Processor</title>
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        margin: 20px;
-      }
-      form {
-        margin-bottom: 20px;
-      }
-      #response,
-      #statsResponse {
-        margin-top: 20px;
-      }
-      .json-link {
-        color: blue;
-        text-decoration: underline;
-        cursor: pointer;
-      }
-    </style>
+    <script src="https://cdn.tailwindcss.com"></script>
   </head>
-  <body>
-    <h1>Crypto Wallet Processor</h1>
+  <body class="bg-gray-100 flex items-center justify-center min-h-screen">
+    <div class="bg-white shadow-lg rounded-lg p-8 w-full max-w-lg">
+      <h1 class="text-2xl font-semibold text-center text-gray-800 mb-6">
+        Crypto Wallet Processor
+      </h1>
 
-    <!-- Wallet Processing Form -->
-    <h2>Process a Wallet</h2>
-    <form id="walletForm">
-      <label for="api_key">API Key:</label>
-      <input type="text" id="api_key" name="api_key" required />
-      <br /><br />
-      <label for="wallet_address">Wallet Address:</label>
-      <input type="text" id="wallet_address" name="wallet_address" required />
-      <br /><br />
-      <button type="submit">Process Wallet</button>
-    </form>
+      <!-- Wallet Processing Form -->
+      <h2 class="text-xl font-semibold text-gray-700 mb-4">Process a Wallet</h2>
+      <form id="walletForm" class="space-y-4">
+        <div>
+          <label for="api_key" class="block text-gray-600 font-medium"
+            >API Key</label
+          >
+          <input
+            type="text"
+            id="api_key"
+            name="api_key"
+            class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+            required
+          />
+        </div>
+        <div>
+          <label for="wallet_address" class="block text-gray-600 font-medium"
+            >Wallet Address</label
+          >
+          <input
+            type="text"
+            id="wallet_address"
+            name="wallet_address"
+            class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+            required
+          />
+        </div>
+        <button
+          type="submit"
+          class="w-full bg-blue-600 text-white font-medium py-2 px-4 rounded-md shadow hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        >
+          Process Wallet
+        </button>
+      </form>
+      <div id="response" class="mt-4 text-gray-600"></div>
 
-    <div id="response"></div>
-
-    <!-- API Usage Statistics Form -->
-    <h2>View Usage Statistics</h2>
-    <form id="statsForm">
-      <label for="api_key_stats">API Key:</label>
-      <input type="text" id="api_key_stats" name="api_key" required />
-      <button type="submit">Get Stats</button>
-    </form>
-
-    <div id="statsResponse"></div>
+      <!-- API Usage Statistics Section (Admin Only) -->
+      <h2 class="text-xl font-semibold text-gray-700 mt-8 mb-4">
+        Admin: View Usage Statistics
+      </h2>
+      <form id="statsForm" class="space-y-4">
+        <div>
+          <label for="api_key_stats" class="block text-gray-600 font-medium"
+            >Admin API Key</label
+          >
+          <input
+            type="text"
+            id="api_key_stats"
+            name="api_key"
+            class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+            required
+          />
+        </div>
+        <button
+          type="submit"
+          class="w-full bg-blue-600 text-white font-medium py-2 px-4 rounded-md shadow hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        >
+          Get Stats
+        </button>
+      </form>
+      <div id="statsResponse" class="mt-4 text-gray-600"></div>
+    </div>
 
     <script>
       // Wallet Processing Logic
@@ -63,12 +88,11 @@
 
         if (!apiKey || !walletAddress) {
           responseDiv.innerHTML =
-            "<p style='color: red;'>Both API key and wallet address are required!</p>";
+            "<p class='text-red-500'>Both API key and wallet address are required!</p>";
           return;
         }
 
         try {
-          // Send request to the backend API
           const response = await fetch("/process_wallet", {
             method: "POST",
             headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -82,31 +106,30 @@
 
           if (response.ok) {
             responseDiv.innerHTML = `
-              <p>${result.message}</p>
+              <p class="text-green-600">${result.message}</p>
               ${
                 result.csv_path
                   ? `<p>
                     <a href="/download_csv?path=${encodeURIComponent(
                       result.csv_path
-                    )}"
-                       class="json-link" target="_blank">Download CSV File</a>
+                    )}" class="text-blue-500 underline" target="_blank">Download CSV File</a>
                   </p>`
                   : ""
               }
             `;
           } else {
-            responseDiv.innerHTML = `<p style="color: red;">${
+            responseDiv.innerHTML = `<p class='text-red-500'>${
               result.error || result.message
             }</p>`;
           }
         } catch (error) {
           console.error("Error:", error);
           responseDiv.innerHTML =
-            '<p style="color: red;">An error occurred. Please try again.</p>';
+            '<p class="text-red-500">An error occurred. Please try again.</p>';
         }
       });
 
-      // API Usage Statistics Logic
+      // API Usage Statistics Logic (Admin Only)
       const statsForm = document.getElementById("statsForm");
       const statsResponseDiv = document.getElementById("statsResponse");
 
@@ -117,12 +140,11 @@
 
         if (!apiKey) {
           statsResponseDiv.innerHTML =
-            "<p style='color: red;'>API key is required to view stats!</p>";
+            "<p class='text-red-500'>Admin API key is required to view stats!</p>";
           return;
         }
 
         try {
-          // Fetch usage stats from the backend
           const response = await fetch(
             `/usage_stats?api_key=${encodeURIComponent(apiKey)}`
           );
@@ -132,7 +154,7 @@
           if (response.ok) {
             statsResponseDiv.innerHTML = `
               <p>Usage Stats:</p>
-              <ul>
+              <ul class="list-disc ml-4">
                 ${result.usage
                   .map(
                     (stat) =>
@@ -142,14 +164,14 @@
               </ul>
             `;
           } else {
-            statsResponseDiv.innerHTML = `<p style="color: red;">${
+            statsResponseDiv.innerHTML = `<p class='text-red-500'>${
               result.error || result.message
             }</p>`;
           }
         } catch (error) {
           console.error("Error:", error);
           statsResponseDiv.innerHTML =
-            '<p style="color: red;">An error occurred. Please try again.</p>';
+            '<p class="text-red-500">An error occurred. Please try again.</p>';
         }
       });
     </script>

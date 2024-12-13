@@ -45,7 +45,7 @@ def process_wallet():
 
     try:
         print(f"Processing wallet: {wallet_address}")
-        output_csv_path = f"./{wallet_address}_wallet_transactions.csv"
+        output_csv_path = f"./output/{wallet_address}_wallet_transactions.csv"
 
         print("Fetching all token transfers...")
         json_data = fetch_all_pages(
@@ -76,14 +76,20 @@ def process_wallet():
         return jsonify({"error": str(e)}), 500
 
 
-@app.route("/download_json")
-def download_json():
-    """Serve the JSON file as a downloadable link."""
+@app.route("/download_csv", methods=["GET"])
+def download_csv():
     file_path = request.args.get("path")
-    if not file_path or not os.path.exists(file_path):
+    if not file_path:
+        return jsonify({"error": "File path is required"}), 400
+
+    # Add base directory if needed
+    base_dir = "/app/"
+    full_path = os.path.join(base_dir, file_path.lstrip("./"))
+
+    if not os.path.exists(full_path):
         return jsonify({"error": "File not found"}), 404
 
-    return send_file(file_path, as_attachment=True, mimetype="application/json")
+    return send_file(full_path, as_attachment=True, mimetype="text/csv")
 
 
 # Establish a connection to the database
