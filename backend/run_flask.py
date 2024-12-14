@@ -62,7 +62,7 @@ def process_wallet():
                 404,
             )
 
-        print("Processing transactions...")
+        print("Processing transactions..")
         df = process_transactions(
             project_id=project_id, json_data=json_data, wallet_address=wallet_address
         )
