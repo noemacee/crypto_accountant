@@ -47,32 +47,6 @@
         </button>
       </form>
       <div id="response" class="mt-4 text-gray-600"></div>
-
-      <!-- API Usage Statistics Section -->
-      <h2 class="text-xl font-semibold text-gray-700 mt-8 mb-4">
-        Admin: View Usage Statistics
-      </h2>
-      <form id="statsForm" class="space-y-4">
-        <div>
-          <label for="api_key_stats" class="block text-gray-600 font-medium"
-            >Admin API Key</label
-          >
-          <input
-            type="text"
-            id="api_key_stats"
-            name="api_key_stats"
-            class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-            required
-          />
-        </div>
-        <button
-          type="submit"
-          class="w-full bg-blue-600 text-white font-medium py-2 px-4 rounded-md shadow hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-        >
-          Get Stats
-        </button>
-      </form>
-      <div id="statsResponse" class="mt-4 text-gray-600"></div>
     </div>
 
     <script>
@@ -133,63 +107,6 @@
           console.error("Error:", error);
           renderMessage(
             responseDiv,
-            "red",
-            "An error occurred. Please try again."
-          );
-        }
-      });
-
-      // API Usage Statistics Logic
-      const statsForm = document.getElementById("statsForm");
-      const statsResponseDiv = document.getElementById("statsResponse");
-
-      statsForm.addEventListener("submit", async (event) => {
-        event.preventDefault();
-
-        const apiKey = document.getElementById("api_key_stats").value.trim();
-
-        if (!apiKey) {
-          renderMessage(
-            statsResponseDiv,
-            "red",
-            "Admin API key is required to view stats!"
-          );
-          return;
-        }
-
-        try {
-          const response = await fetch("/usage_stats", {
-            method: "GET",
-            headers: {
-              "X-API-Key": apiKey,
-            },
-          });
-
-          const result = await response.json();
-
-          if (response.ok) {
-            statsResponseDiv.innerHTML = `
-              <p>Usage Stats:</p>
-              <ul class="list-disc ml-4">
-                ${result.usage
-                  .map(
-                    (stat) =>
-                      `<li>Endpoint: ${stat.endpoint}, Count: ${stat.count}</li>`
-                  )
-                  .join("")}
-              </ul>
-            `;
-          } else {
-            renderMessage(
-              statsResponseDiv,
-              "red",
-              result.error || result.message
-            );
-          }
-        } catch (error) {
-          console.error("Error:", error);
-          renderMessage(
-            statsResponseDiv,
             "red",
             "An error occurred. Please try again."
           );

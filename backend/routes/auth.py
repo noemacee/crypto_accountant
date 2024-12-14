@@ -7,6 +7,7 @@ from flask_login import (
     login_required,
     current_user,
 )
+from flask import jsonify
 
 # Create a Blueprint for auth routes
 auth_routes = Blueprint("auth_routes", __name__)
@@ -43,20 +44,18 @@ class User(UserMixin):
         return users.get(user_id)
 
 
-@auth_routes.route("/login", methods=["GET", "POST"])
-def login():
-    if request.method == "POST":
-        username = request.form.get("username")
-        password = request.form.get("password")  # Add proper password validation
-        user = User.get("1") if username == "admin" else User.get("2")  # Example logic
+@auth_routes.route("/login", methods=["POST"])
+def login_backend():
+    """Backend route to authenticate the user."""
+    data = request.json
+    username = data.get("username")
+    password = data.get("password")
 
-        if user:  # Replace with real authentication logic
-            login_user(user)
-            return redirect(url_for("index"))
-        else:
-            return "Invalid credentials", 401
-
-    return render_template("login.html")
+    # Simple mock validation (replace with real validation logic)
+    if username == "admin" and password == "password":  # Example only
+        return jsonify({"message": "Login successful"}), 200
+    else:
+        return jsonify({"error": "Invalid credentials"}), 401
 
 
 @auth_routes.route("/logout")

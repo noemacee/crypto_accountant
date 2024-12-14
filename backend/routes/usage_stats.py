@@ -11,7 +11,7 @@ def get_usage_stats():
     """
     Retrieve usage statistics for a specific API key.
     """
-    api_key = request.args.get("X-API-Key")
+    api_key = request.headers.get("X-API-Key")
     if not api_key:
         return jsonify({"error": "API key is required"}), 400
 
@@ -35,9 +35,6 @@ def get_all_usage_stats():
     """
     Retrieve usage statistics for all API keys (admin-only).
     """
-    if current_user.role != "admin":
-        return jsonify({"error": "Unauthorized access"}), 403
-
     try:
         stats = execute_query(
             """

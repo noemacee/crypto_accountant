@@ -3,84 +3,136 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Metrics Dashboard</title>
+    <title>Metrics Viewer</title>
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
   <body class="bg-gray-100 flex items-center justify-center min-h-screen">
     <div class="bg-white shadow-lg rounded-lg p-8 w-full max-w-lg">
       <h1 class="text-2xl font-semibold text-center text-gray-800 mb-6">
-        Metrics Dashboard
+        Metrics Viewer
       </h1>
 
-      <h2 class="text-xl font-semibold text-gray-700 mb-4">Usage Statistics</h2>
-      <form id="statsForm" class="space-y-4">
+      <!-- Form to Fetch Metrics -->
+      <h2 class="text-xl font-semibold text-gray-700 mb-4">
+        View API Usage Metrics
+      </h2>
+      <form id="metricsForm" class="space-y-4">
         <div>
-          <label for="api_key_stats" class="block text-gray-600 font-medium"
-            >Admin API Key</label
+          <label for="api_key" class="block text-gray-600 font-medium"
+            >API Key</label
           >
           <input
             type="text"
-            id="api_key_stats"
-            name="api_key_stats"
+            id="api_key"
+            name="api_key"
             class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-            required
+            placeholder="Enter API Key"
           />
         </div>
         <button
           type="submit"
           class="w-full bg-blue-600 text-white font-medium py-2 px-4 rounded-md shadow hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
         >
-          Get Stats
+          Get Metrics
         </button>
       </form>
-      <div id="statsResponse" class="mt-4 text-gray-600"></div>
+
+      <!-- Admin Button for All Usage Stats -->
+      <button
+        id="fetchAllMetrics"
+        class="w-full mt-4 bg-gray-600 text-white font-medium py-2 px-4 rounded-md shadow hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500"
+        style="display: none"
+      >
+        View All Metrics (Admin Only)
+      </button>
+
+      <!-- Metrics Display -->
+      <div id="metricsResponse" class="mt-6">
+        <h3 class="text-lg font-semibold text-gray-800">Metrics:</h3>
+        <ul
+          id="metricsList"
+          class="list-disc list-inside text-gray-600 mt-4"
+        ></ul>
+      </div>
     </div>
 
     <script>
-      // Metrics page JavaScript
-      const statsForm = document.getElementById("statsForm");
-      const statsResponseDiv = document.getElementById("statsResponse");
+      // Helper function to render metrics
+      function renderMetrics(metrics) {
+        const metricsList = document.getElementById("metricsList");
+        metricsList.innerHTML = "";
+        metrics.forEach((metric) => {
+          const listItem = document.createElement("li");
+          listItem.textContent = `API Key: ${
+            metric.api_key || "N/A"
+          }, Endpoint: ${metric.endpoint}, Count: ${metric.count}`;
+          metricsList.appendChild(listItem);
+        });
+      }
 
-      statsForm.addEventListener("submit", async (event) => {
+      // Fetch metrics for a specific API key
+      const metricsForm = document.getElementById("metricsForm");
+      metricsForm.addEventListener("submit", async (event) => {
         event.preventDefault();
-
-        const apiKey = document.getElementById("api_key_stats").value.trim();
+        const apiKey = document.getElementById("api_key").value.trim();
 
         if (!apiKey) {
-          statsResponseDiv.innerHTML = `<p class="text-red-600">API key is required to view stats!</p>`;
+          document.getElementById(
+            "metricsResponse"
+          ).innerHTML = `<p class="text-red-600">API Key is required to fetch metrics.</p>`;
           return;
         }
 
         try {
-          const response = await fetch(`/usage_stats/all_usage_stats`, {
-            method: "GET",
+          const response = await fetch("/usage_stats", {
+            method: "POST",
             headers: {
-              "X-API-Key": apiKey,
+              "Content-Type": "application/json",
+              "X-API-Key": apiKey, // API key sent in header
             },
+            body: JSON.stringify({}), // Body is empty as it's not required for usage stats
           });
-
           const result = await response.json();
 
           if (response.ok) {
-            statsResponseDiv.innerHTML = `
-              <p>Usage Stats:</p>
-              <ul class="list-disc ml-4">
-                ${result.usage
-                  .map(
-                    (stat) =>
-                      `<li>API Key: ${stat.api_key}, Endpoint: ${stat.endpoint}, Count: ${stat.count}</li>`
-                  )
-                  .join("")}
-              </ul>
-            `;
+            renderMetrics(result.usage || []);
           } else {
-            statsResponseDiv.innerHTML = `<p class="text-red-600">${
-              result.error || result.message
+            document.getElementById(
+              "metricsResponse"
+            ).innerHTML = `<p class="text-red-600">${
+              result.error || "Failed to fetch metrics."
             }</p>`;
           }
         } catch (error) {
           console.error("Error:", error);
-          statsResponseDiv.innerHTML = `<p class="text-red-600">An error occurred. Please try again.</p>`;
+          document.getElementById(
+            "metricsResponse"
+          ).innerHTML = `<p class="text-red-600">An error occurred. Please try again.</p>`;
+        }
+      });
+
+      // Fetch all metrics (admin-only functionality)
+      const fetchAllMetricsButton = document.getElementById("fetchAllMetrics");
+      fetchAllMetricsButton.style.display = "block"; // Show button for demonstration purposes
+      fetchAllMetricsButton.addEventListener("click", async () => {
+        try {
+          const response = await fetch(`/all_usage_stats`);
+          const result = await response.json();
+
+          if (response.ok) {
+            renderMetrics(result.usage || []);
+          } else {
+            document.getElementById(
+              "metricsResponse"
+            ).innerHTML = `<p class="text-red-600">${
+              result.error || "Failed to fetch all metrics."
+            }</p>`;
+          }
+        } catch (error) {
+          console.error("Error:", error);
+          document.getElementById(
+            "metricsResponse"
+          ).innerHTML = `<p class="text-red-600">An error occurred. Please try again.</p>`;
         }
       });
     </script>

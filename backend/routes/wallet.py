@@ -3,6 +3,7 @@ import os
 import logging
 from helpers import fetch_all_pages, save_to_csv, process_transactions
 from config import PAGE_SIZE
+from services.db import execute_query
 
 # Set up logging
 logging.basicConfig(
@@ -69,6 +70,15 @@ def process_wallet():
         logger.info("Processing transactions for wallet: %s", wallet_address)
         df = process_transactions(PROJECT_ID, json_data, wallet_address)
         save_to_csv(df, output_csv_path)
+
+        logger.info("Updating API usage metrics for API key: %s", api_key)
+        execute_query(
+            """
+            INSERT INTO api_usage (api_key, endpoint, timestamp)
+            VALUES (%s, %s, NOW())
+            """,
+            params=(api_key, "/wallet/process_wallet"),
+        )
 
         logger.info("Processing complete. CSV saved at: %s", output_csv_path)
         return (

@@ -1,6 +1,7 @@
 import logging
 from flask import Flask, render_template, request, jsonify, redirect, Response
 import requests
+import os
 
 # Set up logging
 logging.basicConfig(
@@ -10,6 +11,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
+app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
 
 # Backend API URL
 BACKEND_API_URL = "http://backend:5000"  # Backend Docker service
@@ -73,7 +75,49 @@ def download_csv():
         return jsonify({"error": str(e)}), 500
 
 
-@app.route("/usage_stats", methods=["GET"])
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    """Frontend route for login that talks to the backend."""
+    if request.method == "POST":
+        # Get username and password from the form
+        username = request.form.get("username")
+        password = request.form.get("password")
+
+        # Send login credentials to the backend
+        try:
+            response = requests.post(
+                f"{BACKEND_API_URL}/login",
+                json={"username": username, "password": password},
+            )
+            if response.status_code == 200:
+                # Backend login successful, redirect to index
+                return redirect(("/"))
+            elif response.status_code == 401:
+                # Invalid credentials
+                return "Invalid credentials, please try again.", 401
+            else:
+                # Other backend errors
+                return f"Error: {response.text}", response.status_code
+        except Exception as e:
+            return f"An error occurred while logging in: {str(e)}", 500
+
+    # Render the login form for GET requests
+    return render_template("login.html")
+
+
+@app.route("/register", methods=["GET", "POST"])
+def register():
+    """Render the registration form."""
+    return render_template("register.html")
+
+
+@app.route("/metrics", methods=["GET"])
+def metrics():
+    """Render the metrics page."""
+    return render_template("metrics.html")
+
+
+@app.route("/usage_stats", methods=["POST"])
 def usage_stats():
     """Query the backend API for usage statistics."""
     api_key = request.headers.get("X-API-Key")
@@ -85,13 +129,26 @@ def usage_stats():
     try:
         logger.debug("Fetching usage stats for API key: %s", api_key)
         response = requests.get(
-            f"{BACKEND_API_URL}/usage_stats/usage_stats?X-API-Key={api_key}"
+            f"{BACKEND_API_URL}/usage_stats/usage_stats",  # No query parameter
+            headers={"X-API-Key": api_key},  # Pass API key as a header
         )
         response.raise_for_status()  # Raise an exception for HTTP errors
         logger.info("Usage stats fetched successfully.")
         return jsonify(response.json())
     except requests.exceptions.RequestException as e:
         logger.error("Error occurred while fetching usage stats: %s", str(e))
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/all_usage_stats", methods=["GET"])
+def all_usage_stats():
+    """Query the backend API for all usage statistics."""
+    # Forward to the backend API
+    try:
+        response = requests.get(f"{BACKEND_API_URL}/usage_stats/all_usage_stats")
+        response.raise_for_status()  # Raise an exception for HTTP errors
+        return jsonify(response.json())
+    except requests.exceptions.RequestException as e:
         return jsonify({"error": str(e)}), 500
 
 
