@@ -9,6 +9,7 @@ important_addresses = {
     "sequencer": "0x01176a1bd84444c89232ec27754698e5d2e7e1a7f1539f12027f28b23ec9f3d8",
 }
 
+protocols_list = ["Nostra", "Ekubo", "AVNU", "Vesu"]
 
 address_to_contract_alias = {  # Used for 'from_alias' and 'to_alias' columns
     # Ekubo
@@ -26,7 +27,6 @@ address_to_contract_alias = {  # Used for 'from_alias' and 'to_alias' columns
     # Starknet
     "0x01176a1bd84444c89232ec27754698e5d2e7e1a7f1539f12027f28b23ec9f3d8": "StarkWare: Sequencer",
 }
-
 
 address_to_protocol = {  # Used for 'DeFi Deposit' and 'DeFi Withdrawal' descriptions.
     # Ekubo : https://docs.ekubo.org/integration-guides/reference/contract-addresses
@@ -75,13 +75,14 @@ address_to_protocol = {  # Used for 'DeFi Deposit' and 'DeFi Withdrawal' descrip
 }
 
 
-## These are a mix of various maps : to remove
 addresses2exchanges_map = {
     # Ekubo
     "0x04505a9f06f2bd639b6601f37a4dc0908bb70e8e0e0c34b1220827d64f4fc066": "Ekubo",  # Unknown Address to understand
+    
     # Nostra
-    "0x040784ffdde08057a5957e64ed360c0ae4e04117b6d8e351c6bb912c09c5cbf5": "Nostra",  # Unknown Address to understand
-    "0x01a2de9f2895ac4e6cb80c11ecc07ce8062a4ae883f64cb2b1dc6724b85e897d": "Nostra",  # Strk/Eth Degen
+    #"0x040784ffdde08057a5957e64ed360c0ae4e04117b6d8e351c6bb912c09c5cbf5": "Nostra",  # Strk/USD - Bug from Andrei's code
+    #"0x01a2de9f2895ac4e6cb80c11ecc07ce8062a4ae883f64cb2b1dc6724b85e897d": "Nostra",  # Strk/Eth Degen - Bug from Andrei's code
+    
     # AVNU
     "0x04270219d365d6b017231b52e92b3fb5d7c8378b05e9abc97724537a80e93b0f": "AVNU",  # AVNU Exchange address.
 }

@@ -10,7 +10,7 @@ important_addresses = {
 }
 
 
-address_to_contract_alias = {  # Used for 'from_alias' and 'to_alias' columns
+address_to_contract_alias = { # Used for 'from_alias' and 'to_alias' columns
     # Ekubo
     "0x00000005dd3d2f4429af886cd1a3b08289dbcea99a294197e9eb43b0e0325b4b": "Ekubo Core",
     "0x02e0af29598b407c8716b17f6d2795eca1b471413fa03fb145a5e33722184067": "Ekubo Positions",
@@ -28,12 +28,13 @@ address_to_contract_alias = {  # Used for 'from_alias' and 'to_alias' columns
 }
 
 
-address_to_protocol = {  # Used for 'DeFi Deposit' and 'DeFi Withdrawal' descriptions.
+address_to_protocol = { # Used for 'DeFi Deposit' and 'DeFi Withdrawal' descriptions.
     # Ekubo : https://docs.ekubo.org/integration-guides/reference/contract-addresses
+
     # Ekubo Upgradeable contracts
-    "0x00000005dd3d2f4429af886cd1a3b08289dbcea99a294197e9eb43b0e0325b4b": "Ekubo",  # Core
-    "0x02e0af29598b407c8716b17f6d2795eca1b471413fa03fb145a5e33722184067": "Ekubo",  # Positions
-    "0x07b696af58c967c1b14c9dde0ace001720635a660a8e90c565ea459345318b30": "Ekubo",  # Positions NFT
+    "0x00000005dd3d2f4429af886cd1a3b08289dbcea99a294197e9eb43b0e0325b4b": "Ekubo", # Core
+    "0x02e0af29598b407c8716b17f6d2795eca1b471413fa03fb145a5e33722184067": "Ekubo", # Positions
+    "0x07b696af58c967c1b14c9dde0ace001720635a660a8e90c565ea459345318b30": "Ekubo", # Positions NFT
     # Ekubo Immutable  contracts
     "0x0199741822c2dc722f6f605204f35e56dbc23bceed54818168c4c49e4fb8737e": "Ekubo",  # Router V3.0.13
     "0x04505a9f06f2bd639b6601f37a4dc0908bb70e8e0e0c34b1220827d64f4fc066": "Ekubo",  # Router V3.0.3
@@ -46,32 +47,39 @@ address_to_protocol = {  # Used for 'DeFi Deposit' and 'DeFi Withdrawal' descrip
     "0x00f2e9a400ba65b13255ef2792612b45d5a20a7a7cf211ffb3f485445022ef72": "Ekubo",  # Revenue buybacks v1.0.0
     "0x04946fb4ad5237d97bbb1256eba2080c4fe1de156da6a7f83e3b4823bb6d7da1": "Ekubo",  # Price Fetcher
     # Ekubo Governance contracts
-    "0x075afe6402ad5a5c20dd25e10ec3b3986acaa647b77e4ae24b0cbc9a54a27a87": "Ekubo",  # Ekubo
-    "0x02a3ed03046e1042e193651e3da6d3c973e3d45c624442be936a374380a78bb5": "Ekubo",  # Staker
-    "0x053499f7aa2706395060fe72d00388803fb2dcc111429891ad7b2d9dcea29acd": "Ekubo",  # Governor
+    "0x075afe6402ad5a5c20dd25e10ec3b3986acaa647b77e4ae24b0cbc9a54a27a87": "Ekubo", # Ekubo
+    "0x02a3ed03046e1042e193651e3da6d3c973e3d45c624442be936a374380a78bb5": "Ekubo", # Staker
+    "0x053499f7aa2706395060fe72d00388803fb2dcc111429891ad7b2d9dcea29acd": "Ekubo", # Governor
+
     # AVNU
     "0x04270219d365d6b017231b52e92b3fb5d7c8378b05e9abc97724537a80e93b0f": "AVNU",
     "0x0360fb3a51bd291e5db0892b6249918a5689bc61760adcb350fe39cd725e1d22": "AVNU",
     "0x0759c955b1cfddb8fcab93fddb0da1902d55bfe98bc4605ecb8cd4c635bc085b": "AVNU",
+
     # Starknet
     "0x01176a1bd84444c89232ec27754698e5d2e7e1a7f1539f12027f28b23ec9f3d8": "Starknet",
+
     # Binance
     "0x0213c67ed78bc280887234fe5ed5e77272465317978ae86c25a71531d9332a2d": "Binance",
+
     # Mint / Bridge
     "0x0000000000000000000000000000000000000000000000000000000000000000": "Mint (Bridge)",
+
     # PK Labs
-    "0x035c36258fffc1da38afcab896a0967ee6997157f42311757e808509226fe5a1": "PK Labs",
+    "0x035c36258fffc1da38afcab896a0967ee6997157f42311757e808509226fe5a1": "PK Labs", 
     "0x01355a4c0a859f3f4e163e7700f6034bda0de11e55eb64978f6fd914001a54b0": "PK Labs",
-    "0x035b6530ef09e227ca9f92efb66df12d0da9fface35ecd53b53a918c7d4eaa75": "PK Labs",
+    "0x035b6530ef09e227ca9f92efb66df12sd0da9fface35ecd53b53a918c7d4eaa75": "PK Labs",
+
     # Nostra
     # Nostra Core contracts
-    "0x073f6addc9339de9822cab4dac8c9431779c09077f02ba7bc36904ea342dd9eb": "Nostra",  # Lend/Borrow - CDP Manager
-    "0x059a943ca214c10234b9a3b61c558ac20c005127d183b86a99a8f3c60a08b4ff": "Nostra",  # Lend/Borrow - Interest Rate Model
-    "0x073f6addc9339de9822cab4dac8c9431779c09077f02ba7bc36904ea342dd9eb": "Nostra",  # Lend/Borrow - Deferred Batch Call Adapter
-    "0x1bcfcb651e98317dc042cb34d0e0226c7f83bca309b6c54d8f0df6ee4e5f721": "Nostra",  # Lend/Borrow - Flash Loan Adapter
+    "0x073f6addc9339de9822cab4dac8c9431779c09077f02ba7bc36904ea342dd9eb": "Nostra", # Lend/Borrow - CDP Manager
+    "0x059a943ca214c10234b9a3b61c558ac20c005127d183b86a99a8f3c60a08b4ff": "Nostra", # Lend/Borrow - Interest Rate Model
+    "0x073f6addc9339de9822cab4dac8c9431779c09077f02ba7bc36904ea342dd9eb": "Nostra", # Lend/Borrow - Deferred Batch Call Adapter
+    "0x1bcfcb651e98317dc042cb34d0e0226c7f83bca309b6c54d8f0df6ee4e5f721": "Nostra", # Lend/Borrow - Flash Loan Adapter
+
     "0x1bcfcb651e98317dc042cb34d0e0226c7f83bca309b6c54d8f0df6ee4e5f721": "Nostra",
-    "0x02a93ef8c7679a5f9b1fcf7286a6e1cadf2e9192be4bcb5cb2d1b39062697527": "Nostra",  # Pool - Factory
-    "0x049ff5b3a7d38e2b50198f408fa8281635b5bc81ee49ab87ac36c8324c214427": "Nostra",  # Pool - Router
+    "0x02a93ef8c7679a5f9b1fcf7286a6e1cadf2e9192be4bcb5cb2d1b39062697527": "Nostra", # Pool - Factory
+    "0x049ff5b3a7d38e2b50198f408fa8281635b5bc81ee49ab87ac36c8324c214427": "Nostra", # Pool - Router
 }
 
 
@@ -89,7 +97,7 @@ addresses2exchanges_map = {
 
 # Pool contracts data
 
-address_to_pool = {  # Used for "Nostra" in 'counterparty_name' column
+address_to_pool = {# Used for "Nostra" in 'counterparty_name' column
     # Nostra : https://docs.nostra.finance/pools/deployed-contracts
     "0x068400056dccee818caa7e8a2c305f9a60d255145bac22d6c5c9bf9e2e046b71": "STRK/ETH",
     "0x07ae43abf704f4981094a4f3457d1abe6b176844f6cdfbb39c0544a635ef56b0": "STRK/USDC",
@@ -106,8 +114,8 @@ address_to_pool = {  # Used for "Nostra" in 'counterparty_name' column
     "0x076def79cc9a3a375779c163ad12996f99fbeb4acd68d7041529159bde897160": "nstSTRK/STRK",
     "0x03f8c9062f1bfe45f82cd70ed97ff053bc5836783ec66adfe3288eb1b43aa83b": "ETH/UNO",
     "0x03d51776d3ce07c211d5dbdf40a9333ec6d6d3a0b2853de1d6706f9ea3b88d45": "STRK/UNO",
-    "0x01a2de9f2895ac4e6cb80c11ecc07ce8062a4ae883f64cb2b1dc6724b85e897d": "STRK/ETH (Degen)",  # Step 1
-    "0x040784ffdde08057a5957e64ed360c0ae4e04117b6d8e351c6bb912c09c5cbf5": "STRK/ETH (Degen)",  # Step 2
+    "0x01a2de9f2895ac4e6cb80c11ecc07ce8062a4ae883f64cb2b1dc6724b85e897d": "STRK/ETH (Degen)", # Step 1
+    "0x040784ffdde08057a5957e64ed360c0ae4e04117b6d8e351c6bb912c09c5cbf5": "STRK/ETH (Degen)", # Step 2
     "0x042543c7d220465bd3f8f42314b51f4f3a61d58de3770523b281da61dbf27c8a": "STRK/USDC (Degen)",
     "0x05e03162008d76cf645fe53c6c13a7a5fce745e8991c6ffe94400d60e44c210a": "ETH/USDC (Degen)",
     "0x01583919ffd78e87fa28fdf6b6a805fe3ddf52f754a63721dcd4c258211129a6": "WBTC/ETH (Degen)",

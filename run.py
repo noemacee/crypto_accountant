@@ -2,8 +2,8 @@
 import os
 from dotenv import load_dotenv
 
-from src.config import WALLET_ADDRESSES, PAGE_SIZE
-from src.helpers import fetch_all_pages, save_to_csv, process_transactions
+from backend.src.config import WALLET_ADDRESSES, PAGE_SIZE
+from backend.src.helpers import fetch_all_pages, save_to_csv, process_transactions
 
 
 # Main function
