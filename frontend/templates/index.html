@@ -48,7 +48,7 @@
       </form>
       <div id="response" class="mt-4 text-gray-600"></div>
 
-      <!-- API Usage Statistics Section (Admin Only) -->
+      <!-- API Usage Statistics Section -->
       <h2 class="text-xl font-semibold text-gray-700 mt-8 mb-4">
         Admin: View Usage Statistics
       </h2>
@@ -60,7 +60,7 @@
           <input
             type="text"
             id="api_key_stats"
-            name="api_key"
+            name="api_key_stats"
             class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
             required
           />
@@ -76,6 +76,11 @@
     </div>
 
     <script>
+      // Helper function for rendering messages
+      function renderMessage(element, type, message) {
+        element.innerHTML = `<p class="text-${type}-600">${message}</p>`;
+      }
+
       // Wallet Processing Logic
       const walletForm = document.getElementById("walletForm");
       const responseDiv = document.getElementById("response");
@@ -83,71 +88,82 @@
       walletForm.addEventListener("submit", async (event) => {
         event.preventDefault();
 
-        const apiKey = document.getElementById("api_key").value;
-        const walletAddress = document.getElementById("wallet_address").value;
+        const apiKey = document.getElementById("api_key").value.trim();
+        const walletAddress = document
+          .getElementById("wallet_address")
+          .value.trim();
 
         if (!apiKey || !walletAddress) {
-          responseDiv.innerHTML =
-            "<p class='text-red-500'>Both API key and wallet address are required!</p>";
+          renderMessage(
+            responseDiv,
+            "red",
+            "Both API key and wallet address are required!"
+          );
           return;
         }
 
         try {
           const response = await fetch("/process_wallet", {
             method: "POST",
-            headers: { "Content-Type": "application/x-www-form-urlencoded" },
-            body: new URLSearchParams({
-              api_key: apiKey,
-              wallet_address: walletAddress,
+            headers: {
+              "Content-Type": "application/json",
+              "X-API-Key": apiKey, // API key sent in header
+            },
+            body: JSON.stringify({
+              wallet_address: walletAddress, // Send wallet address in body
             }),
           });
 
           const result = await response.json();
 
           if (response.ok) {
-            responseDiv.innerHTML = `
-              <p class="text-green-600">${result.message}</p>
-              ${
-                result.csv_path
-                  ? `<p>
-                    <a href="/download_csv?path=${encodeURIComponent(
-                      result.csv_path
-                    )}" class="text-blue-500 underline" target="_blank">Download CSV File</a>
-                  </p>`
-                  : ""
-              }
-            `;
+            renderMessage(responseDiv, "green", result.message);
+            if (result.csv_path) {
+              responseDiv.innerHTML += `
+                <p>
+                  <a href="/download_csv?path=${encodeURIComponent(
+                    result.csv_path
+                  )}" class="text-blue-500 underline" target="_blank">Download CSV File</a>
+                </p>`;
+            }
           } else {
-            responseDiv.innerHTML = `<p class='text-red-500'>${
-              result.error || result.message
-            }</p>`;
+            renderMessage(responseDiv, "red", result.error || result.message);
           }
         } catch (error) {
           console.error("Error:", error);
-          responseDiv.innerHTML =
-            '<p class="text-red-500">An error occurred. Please try again.</p>';
+          renderMessage(
+            responseDiv,
+            "red",
+            "An error occurred. Please try again."
+          );
         }
       });
 
-      // API Usage Statistics Logic (Admin Only)
+      // API Usage Statistics Logic
       const statsForm = document.getElementById("statsForm");
       const statsResponseDiv = document.getElementById("statsResponse");
 
       statsForm.addEventListener("submit", async (event) => {
         event.preventDefault();
 
-        const apiKey = document.getElementById("api_key_stats").value;
+        const apiKey = document.getElementById("api_key_stats").value.trim();
 
         if (!apiKey) {
-          statsResponseDiv.innerHTML =
-            "<p class='text-red-500'>Admin API key is required to view stats!</p>";
+          renderMessage(
+            statsResponseDiv,
+            "red",
+            "Admin API key is required to view stats!"
+          );
           return;
         }
 
         try {
-          const response = await fetch(
-            `/usage_stats?api_key=${encodeURIComponent(apiKey)}`
-          );
+          const response = await fetch("/usage_stats", {
+            method: "GET",
+            headers: {
+              "X-API-Key": apiKey,
+            },
+          });
 
           const result = await response.json();
 
@@ -164,14 +180,19 @@
               </ul>
             `;
           } else {
-            statsResponseDiv.innerHTML = `<p class='text-red-500'>${
+            renderMessage(
+              statsResponseDiv,
+              "red",
               result.error || result.message
-            }</p>`;
+            );
           }
         } catch (error) {
           console.error("Error:", error);
-          statsResponseDiv.innerHTML =
-            '<p class="text-red-500">An error occurred. Please try again.</p>';
+          renderMessage(
+            statsResponseDiv,
+            "red",
+            "An error occurred. Please try again."
+          );
         }
       });
     </script>

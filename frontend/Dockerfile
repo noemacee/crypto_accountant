@@ -7,11 +7,16 @@ ENV PYTHONUNBUFFERED=1
 # Set the working directory
 WORKDIR /app
 
-# Copy the application code into the container
-COPY . /app
+
+COPY requirements.txt .
 
 # Install dependencies
-RUN pip install --no-cache-dir flask requests
+RUN apt-get update && apt-get install -y libpq-dev gcc \
+    && pip install --no-cache-dir -r requirements.txt \
+    && apt-get clean
+
+# Copy the application code into the container
+COPY . .
 
 # Expose port 3000 for the frontend Flask application
 EXPOSE 3000
