@@ -11,6 +11,15 @@
       "name": "parashift db",
       "username": "read_user",
       "database": "gt_analysis"
+    },
+    {
+      "previewLimit": 50,
+      "server": "localhost",
+      "port": 5432,
+      "driver": "PostgreSQL",
+      "name": "Hetzner DB",
+      "database": "hetzner_database",
+      "username": "root"
     }
   ]
 }

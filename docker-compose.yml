@@ -31,7 +31,7 @@ services:
 
   db:
     # Database service (POSTGRES_HOST)
-    container_name: accounter_db
+    container_name: hetzner_database
     image: postgres:14
     env_file:
       - ./backend/.env # Use an environment file for sensitive values

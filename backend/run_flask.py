@@ -10,7 +10,7 @@ from src.helpers import fetch_all_pages, save_to_csv, process_transactions
 
 
 DATABASE_URL = os.getenv(
-    "DATABASE_URL", "postgresql://user:password@db:5432/accounter_db"
+    "DATABASE_URL"
 )
 
 # Initialize Flask app
