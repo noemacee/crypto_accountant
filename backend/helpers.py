@@ -117,7 +117,6 @@ def descriptionv2(df):
             "",  # Initialize with empty strings
         )
 
-<<<<<<< HEAD:backend/helpers.py
     # Condition 1: Transfer Fee
     # df.loc[df["transfer_type"] == "fee_transfer", "Description"] = "Transaction fee"
     df.loc[df["transfer_to"] == important_addresses["sequencer"], "Description"] = (
@@ -163,52 +162,6 @@ def descriptionv2(df):
         (df["call"] == "transfer") & (df["Counterparty name"] == ""), "Description"
     ] = "Transfer"
 
-=======
-    # Condition 1: Transfer
-    df.loc[
-        (df["call"] == "transfer") & 
-        ~(df['Counterparty name'].isin(protocols_list)),  
-        "Description"
-    ] = "Transfer"
-
-    # Condition 2: Exchange
-    df.loc[
-        df['Counterparty address'].isin(addresses2exchanges_map.keys()) &
-        (df["call"] != 'remove_liquidity') &
-        (df["call"] != 'add_liquidity'),
-        "Description"
-    ] = "Exchange"
-
-    # Condition 3: DeFi Interest
-    df["Amount In"] = pd.to_numeric(df["Amount In"], errors="coerce")
-    df.loc[
-        (df["call"] == "claim") & pd.notna(df["Amount In"]),
-        "Description"
-    ] = "DeFi Interest"
-
-    # Condition 4: DeFi Deposit
-    df.loc[
-        (df['Counterparty name'].isin(protocols_list)) & 
-        pd.notna(df['Counterparty name']) |
-        (df["call"] == 'add_liquidity'),
-        "Description"
-    ] = "DeFi Deposit"
-
-    # Condition 5: DeFi Withdrawal
-    df.loc[
-        (df['Counterparty name'].isin(protocols_list)) & 
-        pd.notna(df['Counterparty name']) |
-        (df["call"] == 'remove_liquidity'),
-        "Description"
-    ] = "DeFi Withdrawal"
-
-    # Condition 6: Transaction Fee
-    df.loc[
-        df["transfer_to"] == important_addresses["sequencer"],
-        "Description"
-    ] = "Transaction Fee"
-
->>>>>>> f334f8c (Partially implemented description v3):backend/src/helpers.py
     return df
 
 

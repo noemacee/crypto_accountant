@@ -152,6 +152,12 @@ def all_usage_stats():
         return jsonify({"error": str(e)}), 500
 
 
+#@app.route("/api", methods=["GET"])
+#def generate_api_key():
+    
+    
+
+
 if __name__ == "__main__":
     logger.info("Starting the Flask application.")
     app.run(debug=True, host="0.0.0.0", port=3000)
