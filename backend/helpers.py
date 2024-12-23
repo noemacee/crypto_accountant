@@ -104,6 +104,29 @@ def process_transaction_call(transaction: Dict) -> Optional[str]:
 
     return None
 
+def alchemy_getClassHashAt(network_url, block_number, contract_hash):
+    url = network_url
+    headers = {
+        "accept": "application/json",
+        "content-type": "application/json"
+    }
+    data = {
+        "id": 1,
+        "jsonrpc": "2.0",
+        "method": "starknet_getClassHashAt",
+        "params": [
+            block_number,   # First parameter: block number
+            contract_hash   # Second parameter: contract hash
+        ]
+    }
+
+    try:
+        response = requests.post(url, headers=headers, data=json.dumps(data))  # Send the POST request
+        response.raise_for_status()  # Raise an HTTPError for bad responses (4xx and 5xx)
+        return response.json()  # Parse and return the JSON response
+    except requests.exceptions.RequestException as e:
+        print(f"Request failed: {e}")
+        return None
 
 def descriptionv2(df):
     protocols_list = ["Nostra", "Ekubo", "AVNU", "Vesu"]
@@ -164,6 +187,22 @@ def descriptionv2(df):
 
     return df
 
+def counterparty_name(df):
+    network_url = "https://starknet-mainnet.g.alchemy.com/starknet/version/rpc/v0_7/up4Ow19ZZxwdQ6M11l9e8KBo8BdNAo_u"
+    block_number = 'latest'
+    mother_class = "0x006a54af2934978ac59b27b91291d3da634f161fd5f22a2993da425893c44c64"
+    # Fill empty Counterparty names by checking class hash
+    empty_counterparty_mask = df["Counterparty name"] == ""
+    if empty_counterparty_mask.any():
+        for idx in df[empty_counterparty_mask].index:
+            counterparty_addr = df.loc[idx, "Counterparty address"]
+            try:
+                class_hash = alchemy_getClassHashAt(network_url, block_number, counterparty_addr)
+                if class_hash['result'] == mother_class: # class_hash is a dict with keys : jsonrpc, id, result
+                    df.loc[idx, "Counterparty name"] = "Mother"
+            except Exception as e:
+                print(f"Error getting class hash for {counterparty_addr}: {e}")
+                continue
 
 def call_column(hash: str, project_id: str) -> Optional[str]:
     """
@@ -260,8 +299,7 @@ def process_transactions(project_id, json_data, wallet_address):
                     if counterparty_address in address_to_debt_token  # Nostra Debt
                     else (
                         "Nostra"
-                        if counterparty_address
-                        in address_to_ibc_token  # Nostra IBC (should delete as these are token addresses)
+                        if counterparty_address in address_to_ibc_token  # Nostra IBC (should delete as these are token addresses)
                         else address_to_protocol.get(counterparty_address)
                     )
                 )
@@ -329,4 +367,5 @@ def process_transactions(project_id, json_data, wallet_address):
             df = pd.concat([df, record_df], ignore_index=True)
 
     df = descriptionv2(df)
+    df = counterparty_name(df)
     return df
