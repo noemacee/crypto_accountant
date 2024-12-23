@@ -7,7 +7,7 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
     ports:
-      - "3000:3000" # Frontend runs on port 3000
+      - "3001:3000" # Frontend runs on port 3000
     environment:
       - API_URL=http://backend:5000 # Point frontend to backend
     env_file:
@@ -23,7 +23,7 @@ services:
     env_file:
       - ./backend/.env # Backend-specific .env file
     ports:
-      - "5000:5000" # Backend runs on port 5000
+      - "5001:5000" # Backend runs on port 5000
     volumes:
       - ./backend:/app # Mount backend code for live updates (optional)
     depends_on:
@@ -31,7 +31,7 @@ services:
 
   db:
     # Database service (POSTGRES_HOST)
-    container_name: hetzner_database
+    container_name: accounter_db
     image: postgres:14
     env_file:
       - ./backend/.env # Use an environment file for sensitive values
