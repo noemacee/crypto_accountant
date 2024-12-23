@@ -10,6 +10,7 @@ from blastapi.builder.functions import (
     getWalletTokenTransfers,
     getTransaction,
 )
+import requests
 
 
 def save_to_json(data, filename):
@@ -187,22 +188,32 @@ def descriptionv2(df):
 
     return df
 
-def counterparty_name(df):
+def fill_counterparty_name(df):
+    """
+    Fill empty Counterparty names by checking class hash.
+    Returns the modified DataFrame.
+    """
     network_url = "https://starknet-mainnet.g.alchemy.com/starknet/version/rpc/v0_7/up4Ow19ZZxwdQ6M11l9e8KBo8BdNAo_u"
-    block_number = 'latest'
-    mother_class = "0x006a54af2934978ac59b27b91291d3da634f161fd5f22a2993da425893c44c64"
+    block_number = "latest"  # Keep as string but pass directly in params
+    mother_classes = [
+        "0x6a54af2934978ac59b27b91291d3da634f161fd5f22a2993da425893c44c64",
+        "0x18758d409574a66615683bf529b5ff4f5c84b09fcfea48102fa3153039ebc10"  # Careful with 0-padding
+    ]
+    
     # Fill empty Counterparty names by checking class hash
-    empty_counterparty_mask = df["Counterparty name"] == ""
+    empty_counterparty_mask = df["Counterparty name"].isna() # Empty counterparty names are NaN
     if empty_counterparty_mask.any():
         for idx in df[empty_counterparty_mask].index:
             counterparty_addr = df.loc[idx, "Counterparty address"]
             try:
-                class_hash = alchemy_getClassHashAt(network_url, block_number, counterparty_addr)
-                if class_hash['result'] == mother_class: # class_hash is a dict with keys : jsonrpc, id, result
-                    df.loc[idx, "Counterparty name"] = "Mother"
+                response = alchemy_getClassHashAt(network_url, block_number, counterparty_addr)
+                if response and 'result' in response and response['result'] in mother_classes:
+                    df.loc[idx, "Counterparty name"] = "Nostra"
             except Exception as e:
                 print(f"Error getting class hash for {counterparty_addr}: {e}")
                 continue
+    
+    return df
 
 def call_column(hash: str, project_id: str) -> Optional[str]:
     """
@@ -366,6 +377,7 @@ def process_transactions(project_id, json_data, wallet_address):
             # Concatenate the single-row DataFrame to the main DataFrame
             df = pd.concat([df, record_df], ignore_index=True)
 
+    df = fill_counterparty_name(df)
     df = descriptionv2(df)
-    df = counterparty_name(df)
+    
     return df
