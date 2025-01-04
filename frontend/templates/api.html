@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Accountea - Wallet Processor (Beta)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-50 font-sans leading-normal tracking-normal">
+    <!-- Header Section -->
+    <header class="bg-white shadow-md">
+      <div
+        class="container mx-auto px-4 py-6 flex justify-between items-center"
+      >
+        <div class="flex items-center space-x-3">
+          <!-- Logo -->
+          <img
+            src="{{ url_for('static', filename='images/accountea.png') }}"
+            alt="Accountea Logo"
+            class="w-12 h-12"
+          />
+          <span class="text-xl font-bold text-gray-800">Accountea</span>
+        </div>
+        <span
+          class="text-sm font-medium bg-yellow-200 text-yellow-800 px-3 py-1 rounded-md"
+        >
+          Beta Version
+        </span>
+      </div>
+    </header>
+
+    <!-- Main Section -->
+    <section class="flex items-center justify-center min-h-screen bg-blue-50">
+      <div class="bg-white shadow-lg rounded-lg p-8 w-full max-w-lg">
+        <h1 class="text-2xl font-semibold text-center text-gray-800 mb-6">
+          Wallet Processor - Step 1
+        </h1>
+        <p class="text-gray-600 text-center mb-4">
+          Enter your API key to proceed. Don't have one? Contact us below.
+        </p>
+
+        <!-- API Key Form -->
+        <form id="apiKeyForm" class="space-y-4">
+          <div>
+            <label for="api_key" class="block text-gray-600 font-medium">
+              API Key
+            </label>
+            <input
+              type="text"
+              id="api_key"
+              name="api_key"
+              class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+              placeholder="Enter your API key"
+              required
+            />
+          </div>
+          <button
+            type="submit"
+            class="w-full bg-blue-600 text-white font-medium py-2 px-4 rounded-md shadow hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            Verify API Key
+          </button>
+        </form>
+
+        <!-- Response Section -->
+        <div id="response" class="mt-4 text-gray-600"></div>
+
+        <!-- Contact Section -->
+        <div class="mt-6 border-t pt-4">
+          <p class="text-sm text-gray-600 text-center">
+            Don't have an API key? <br />
+            <a
+              href="mailto:contact@accountea.com"
+              class="text-blue-500 underline"
+            >
+              Contact us to get one
+            </a>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <script>
+      // API Key Form Logic
+      const apiKeyForm = document.getElementById("apiKeyForm");
+      const responseDiv = document.getElementById("response");
+
+      apiKeyForm.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        const apiKey = document.getElementById("api_key").value.trim();
+
+        if (!apiKey) {
+          responseDiv.innerHTML =
+            '<p class="text-red-600">API key is required!</p>';
+          return;
+        }
+
+        try {
+          const response = await fetch("/validate_api_key", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ api_key: apiKey }),
+          });
+
+          if (response.status === 401) {
+            responseDiv.innerHTML =
+              '<p class="text-red-600">Unauthorized: Invalid API key. Please check and try again.</p>';
+            return;
+          }
+
+          const result = await response.json();
+
+          if (response.ok && result.message === "API key is valid") {
+            responseDiv.innerHTML =
+              '<p class="text-green-600">API key verified! Proceeding...</p>';
+            setTimeout(() => {
+              window.location.href = "/process_wallet"; // Redirect to wallet processor
+            }, 1000);
+          } else if (result.error) {
+            responseDiv.innerHTML = `<p class="text-red-600">${result.error}</p>`;
+          } else {
+            responseDiv.innerHTML =
+              '<p class="text-red-600">Invalid API key. Please try again.</p>';
+          }
+        } catch (error) {
+          console.error("Error validating API key:", error);
+          responseDiv.innerHTML =
+            '<p class="text-red-600">An error occurred. Please try again.</p>';
+        }
+      });
+    </script>
+  </body>
+</html>

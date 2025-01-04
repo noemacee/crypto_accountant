@@ -1,2 +1,2 @@
 select *
-from api_usage
+from api_keys

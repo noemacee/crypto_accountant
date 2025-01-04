@@ -1,7 +1,7 @@
 import logging
 import os
 import requests
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, redirect, session
 
 index_routes = Blueprint("index", __name__)
 logger = logging.getLogger(__name__)
@@ -17,3 +17,17 @@ def index():
     return render_template("index.html")
 
 
+@index_routes.route("/process_wallet")
+def processor():
+    """Render the processor page."""
+    if not session.get("authenticated"):
+        return redirect("/")
+    logger.info("Rendering the processor page.")
+    return render_template("processor.html")
+
+
+@index_routes.route("/api")
+def api():
+    """Render the API page."""
+    logger.info("Rendering the API page.")
+    return render_template("api.html")

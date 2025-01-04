@@ -7,6 +7,7 @@ from routes.index import index_routes
 from routes.auth import auth_routes
 from routes.wallet import wallet_routes
 from routes.usage_stats import usage_routes
+from routes.api_keys import api_keys_routes
 
 # Set up logging
 logging.basicConfig(
@@ -26,6 +27,7 @@ def create_app():
     app.register_blueprint(auth_routes)
     app.register_blueprint(wallet_routes)
     app.register_blueprint(usage_routes)
+    app.register_blueprint(api_keys_routes)
 
     return app
 
