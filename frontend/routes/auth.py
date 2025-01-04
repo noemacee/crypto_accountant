@@ -6,7 +6,7 @@ from flask import Blueprint, render_template, request, redirect
 auth_routes = Blueprint("auth_routes", __name__)
 logger = logging.getLogger(__name__)
 
-BACKEND_API_URL = os.getenv("BACKEND_API_URL", "http://backend:5000")
+BACKEND_API_URL = os.getenv("BACKEND_API_URL")
 
 
 @auth_routes.route("/login", methods=["GET", "POST"])

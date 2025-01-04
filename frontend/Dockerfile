@@ -22,4 +22,4 @@ COPY . .
 EXPOSE 3000
 
 # Set the command to run the Flask app
-CMD ["python", "frontend.py"]
+CMD ["python", "app.py"]

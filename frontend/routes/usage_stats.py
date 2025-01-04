@@ -6,7 +6,7 @@ from flask import Blueprint, request, render_template, jsonify
 usage_routes = Blueprint("usage_routes", __name__)
 logger = logging.getLogger(__name__)
 
-BACKEND_API_URL = os.getenv("BACKEND_API_URL", "http://backend:5000")
+BACKEND_API_URL = os.getenv("BACKEND_API_URL")
 
 
 @usage_routes.route("/metrics", methods=["GET"])

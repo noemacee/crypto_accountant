@@ -2,6 +2,9 @@ from flask import Blueprint, request, jsonify
 from flask_login import login_required, current_user
 from services.db import execute_query
 
+import logging
+
+
 # Blueprint for usage stats routes
 usage_stats_routes = Blueprint("usage_stats_routes", __name__)
 
@@ -25,6 +28,7 @@ def get_usage_stats():
             """,
             params=(api_key,),
         )
+
         return jsonify({"usage": stats}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500

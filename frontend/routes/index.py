@@ -7,7 +7,7 @@ index_routes = Blueprint("index", __name__)
 logger = logging.getLogger(__name__)
 
 # If needed, you can still define the backend URL here or import from a config
-BACKEND_API_URL = os.getenv("BACKEND_API_URL", "http://backend:5000")
+BACKEND_API_URL = os.getenv("BACKEND_API_URL")
 
 
 @index_routes.route("/")
