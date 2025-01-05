@@ -21,9 +21,9 @@ def index():
 def processor():
     """Render the processor page."""
     if not session.get("authenticated"):
-        return redirect("/")
+        return redirect("/api")
     logger.info("Rendering the processor page.")
-    return render_template("processor.html")
+    return render_template("process_wallet.html")
 
 
 @index_routes.route("/api")

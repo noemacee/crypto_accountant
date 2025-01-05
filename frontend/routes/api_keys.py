@@ -27,6 +27,7 @@ def validate_api_key():
         response.raise_for_status()
         logger.info("API key validation successful.")
         session["authenticated"] = True
+        session["api_key"] = api_key
         return jsonify(response.json())  # Return the backend's response
     except requests.exceptions.HTTPError as http_err:
         logger.error("HTTP error occurred: %s", http_err)
