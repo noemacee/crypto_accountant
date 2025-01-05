@@ -27,11 +27,20 @@ def generate_api_key():
             (api_key, owner),
         )
         conn.commit()
-        new_key = cursor.fetchone()[0]
+        new_key_row = cursor.fetchone()
+
+        if new_key_row is None:
+            raise ValueError(
+                "Failed to fetch the generated API key. The database did not return a result."
+            )
+
+        new_key = new_key_row["api_key"]
+
         cursor.close()
         conn.close()
         return jsonify({"api_key": new_key}), 201
     except Exception as e:
+        logger.error("Error generating API key: %s", str(e))
         return jsonify({"error": str(e)}), 500
 
 

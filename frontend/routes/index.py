@@ -31,3 +31,12 @@ def api():
     """Render the API page."""
     logger.info("Rendering the API page.")
     return render_template("api.html")
+
+
+@index_routes.route("/admin")
+def admin():
+    """Render the admin page."""
+    if not session.get("authenticated"):
+        return redirect("/api")
+    logger.info("Rendering the admin page.")
+    return render_template("admin.html")
