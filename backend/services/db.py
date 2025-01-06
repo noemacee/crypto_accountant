@@ -1,6 +1,7 @@
 import psycopg2
 from psycopg2.extras import RealDictCursor
 import os
+from dotenv import load_dotenv
 
 
 def get_db_connection():
@@ -8,6 +9,8 @@ def get_db_connection():
     Establish and return a connection to the PostgreSQL database.
     Reads credentials from environment variables.
     """
+
+    load_dotenv()
     DATABASE_URL = os.getenv("DATABASE_URL")
     if not DATABASE_URL:
         raise RuntimeError("DATABASE_URL environment variable is not set.")

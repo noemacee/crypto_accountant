@@ -9,7 +9,7 @@ important_addresses = {
     "sequencer": "0x01176a1bd84444c89232ec27754698e5d2e7e1a7f1539f12027f28b23ec9f3d8",
 }
 
-protocols_list = ["Nostra", "Ekubo", "AVNU", "Vesu"]
+protocols_list = ["Nostra", "Ekubo", "AVNU", "Vesu", "Fibrous"]
 
 address_to_contract_alias = {  # Used for 'from_alias' and 'to_alias' columns
     # Ekubo
@@ -53,17 +53,6 @@ address_to_protocol = {  # Used for 'DeFi Deposit' and 'DeFi Withdrawal' descrip
     "0x04270219d365d6b017231b52e92b3fb5d7c8378b05e9abc97724537a80e93b0f": "AVNU",
     "0x0360fb3a51bd291e5db0892b6249918a5689bc61760adcb350fe39cd725e1d22": "AVNU",
     "0x0759c955b1cfddb8fcab93fddb0da1902d55bfe98bc4605ecb8cd4c635bc085b": "AVNU",
-    # Starknet
-    "0x01176a1bd84444c89232ec27754698e5d2e7e1a7f1539f12027f28b23ec9f3d8": "Starknet",
-    # Binance
-    "0x0213c67ed78bc280887234fe5ed5e77272465317978ae86c25a71531d9332a2d": "Binance",
-    # Mint / Bridge
-    "0x0000000000000000000000000000000000000000000000000000000000000000": "Mint (Bridge)",
-    "0x051ba9be967d17aaafac92f9bc7ca4b035dfd3c4a97b32be1773f63e27b0526a": "StarkGate",
-    # PK Labs
-    "0x035c36258fffc1da38afcab896a0967ee6997157f42311757e808509226fe5a1": "PK Labs",
-    "0x01355a4c0a859f3f4e163e7700f6034bda0de11e55eb64978f6fd914001a54b0": "PK Labs",
-    "0x035b6530ef09e227ca9f92efb66df12d0da9fface35ecd53b53a918c7d4eaa75": "PK Labs",
     # Nostra
     # Nostra Core contracts
     "0x073f6addc9339de9822cab4dac8c9431779c09077f02ba7bc36904ea342dd9eb": "Nostra",  # Lend/Borrow - CDP Manager
@@ -75,17 +64,29 @@ address_to_protocol = {  # Used for 'DeFi Deposit' and 'DeFi Withdrawal' descrip
     "0x049ff5b3a7d38e2b50198f408fa8281635b5bc81ee49ab87ac36c8324c214427": "Nostra",  # Pool - Router
 }
 
+addresses_to_PKLabs = {
+    "0x035c36258fffc1da38afcab896a0967ee6997157f42311757e808509226fe5a1": "PK Labs",
+    "0x01355a4c0a859f3f4e163e7700f6034bda0de11e55eb64978f6fd914001a54b0": "PK Labs",
+    "0x035b6530ef09e227ca9f92efb66df12d0da9fface35ecd53b53a918c7d4eaa75": "PK Labs",
+}
+
+addresses_to_Starknet = {
+    "0x01176a1bd84444c89232ec27754698e5d2e7e1a7f1539f12027f28b23ec9f3d8": "Starknet",
+}
 
 addresses2exchanges_map = {
     # Ekubo
     "0x04505a9f06f2bd639b6601f37a4dc0908bb70e8e0e0c34b1220827d64f4fc066": "Ekubo",  # Unknown Address to understand
-    
     # Nostra
-    #"0x040784ffdde08057a5957e64ed360c0ae4e04117b6d8e351c6bb912c09c5cbf5": "Nostra",  # Strk/USD - Bug from Andrei's code
-    #"0x01a2de9f2895ac4e6cb80c11ecc07ce8062a4ae883f64cb2b1dc6724b85e897d": "Nostra",  # Strk/Eth Degen - Bug from Andrei's code
-    
+    # "0x040784ffdde08057a5957e64ed360c0ae4e04117b6d8e351c6bb912c09c5cbf5": "Nostra",  # Strk/USD - Bug from Andrei's code. This one should be included as EXCHANGE
+    # "0x01a2de9f2895ac4e6cb80c11ecc07ce8062a4ae883f64cb2b1dc6724b85e897d": "Nostra",  # Strk/Eth Degen - Bug from Andrei's code
     # AVNU
     "0x04270219d365d6b017231b52e92b3fb5d7c8378b05e9abc97724537a80e93b0f": "AVNU",  # AVNU Exchange address.
+    # Binance
+    "0x0213c67ed78bc280887234fe5ed5e77272465317978ae86c25a71531d9332a2d": "Binance",
+    # Mint / Bridge
+    "0x0000000000000000000000000000000000000000000000000000000000000000": "Mint (Bridge)",
+    "0x051ba9be967d17aaafac92f9bc7ca4b035dfd3c4a97b32be1773f63e27b0526a": "StarkGate",
 }
 
 

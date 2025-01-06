@@ -1,7 +1,5 @@
 {
-  "cSpell.words": [
-    "starknet"
-  ],
+  "cSpell.words": ["starknet"],
   "sqltools.connections": [
     {
       "previewLimit": 50,
@@ -20,6 +18,15 @@
       "name": "Hetzner DB",
       "database": "hetzner_database",
       "username": "root"
+    },
+    {
+      "previewLimit": 50,
+      "server": "localhost",
+      "port": 5432,
+      "driver": "PostgreSQL",
+      "name": "test_database",
+      "database": "test_database",
+      "username": "user"
     }
   ]
 }

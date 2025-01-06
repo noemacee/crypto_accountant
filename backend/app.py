@@ -20,6 +20,11 @@ app.register_blueprint(usage_stats_routes, url_prefix="/usage_stats")
 app.register_blueprint(auth_routes)
 
 
+@app.route("/")
+def test():
+    return "Server is running"
+
+
 # Run the application
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0", port=5000)
