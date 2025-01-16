@@ -205,7 +205,8 @@ def descriptionv3(tx, wallet_address, counterparty_address, amount_in, amount_ou
     block_number = "latest"
     mother_classes = [
         "0x6a54af2934978ac59b27b91291d3da634f161fd5f22a2993da425893c44c64",
-        "0x18758d409574a66615683bf529b5ff4f5c84b09fcfea48102fa3153039ebc10",  # Careful with 0-padding. Check function converter_address
+        #"0x18758d409574a66615683bf529b5ff4f5c84b09fcfea48102fa3153039ebc10", # Taken out after mistakenly labeling an "address of the Starknet Foundation which is used to payout grants" : “0x025c3ebe94f55ea8eb289cb34844f2630551bd198d9915c91dcd661a90a1dc1e”
+        # Careful with 0-padding. Check function converter_address  
     ]
     response = alchemy_getClassHashAt(network_url, block_number, counterparty_address)
     if response and "result" in response and response["result"] in mother_classes:
@@ -323,7 +324,7 @@ def fill_counterparty_name(counterparty_address, tx):
     block_number = "latest"
     mother_classes = [
         "0x6a54af2934978ac59b27b91291d3da634f161fd5f22a2993da425893c44c64",
-        "0x18758d409574a66615683bf529b5ff4f5c84b09fcfea48102fa3153039ebc10",  # Careful with 0-padding. Check function converter_address
+        #"0x18758d409574a66615683bf529b5ff4f5c84b09fcfea48102fa3153039ebc10", # Taken out after mistakenly labeling an "address of the Starknet Foundation which is used to payout grants" : “0x025c3ebe94f55ea8eb289cb34844f2630551bd198d9915c91dcd661a90a1dc1e”
     ]
     response = alchemy_getClassHashAt(network_url, block_number, counterparty_address)
     if response and "result" in response and response["result"] in mother_classes:
@@ -332,22 +333,23 @@ def fill_counterparty_name(counterparty_address, tx):
         [
             counterparty_address in address_to_pool,  # Nostra Pool
             counterparty_address in address_to_debt_token,  # Nostra Debt
-            counterparty_address
-            in address_to_ibc_token,  # Nostra IBC (should delete as these are token addresses)
+            counterparty_address in address_to_ibc_token,  # Nostra IBC (should delete as these are token addresses)
             class_hash_method,  # Check if contract is Nostra
         ]
     )
     if is_nostra:
         return "Nostra"
-    if counterparty_address in addresses_to_PKLabs:
-        return "PK Labs"
+    #if counterparty_address in addresses_to_PKLabs: # Remove PK Labs for privacy
+    #    return "PK Labs"
     if counterparty_address in addresses2exchanges_map:
-        return addresses2exchanges_map.get(counterparty_address, "/")
+        return addresses2exchanges_map.get(counterparty_address, "")
     if counterparty_address in addresses_to_Starknet:
-        return addresses_to_Starknet.get(counterparty_address, "/")
+        return addresses_to_Starknet.get(counterparty_address, "")
+    if counterparty_address in addresses2CEXs_map:
+        return addresses2CEXs_map.get(counterparty_address, "")    
     return address_to_protocol.get(
-        counterparty_address, "/"
-    )  # Write "/" if unknown address
+        counterparty_address, ""
+    )  # Write "" if unknown address
 
 
 def fill_amount_in(tx, wallet_address):
@@ -364,6 +366,13 @@ def fill_amount_out(tx, wallet_address):
         decimals = int(tx.get("contractDecimals", 18))
         return f"{value / (10 ** decimals):.10f}"
     return None
+
+def fill_currency_type(tx):
+    verified = ""
+    token_symbols = ["STRK", "ETH", "WBTC", "USDC", "USDT"]
+    if tx.get("contractSymbol") in token_symbols:
+        verified = "Verified"
+    return verified
 
 
 def fill_currency(tx):
@@ -394,13 +403,13 @@ def process_transactions(project_id, json_data, wallet_address):
             "Amount In",
             "Amount Out",
             "Currency",
+            "Currency Type",
             "Description",
             "Counterparty address",  # Helper
             "Counterparty name",
             "Transaction hash",
             "Blockchain",
             "Wallet",
-            "tx_hash",  # Helper
         ]
     )
 
@@ -427,6 +436,7 @@ def process_transactions(project_id, json_data, wallet_address):
             amount_in_tx = fill_amount_in(tx, wallet_address)
             amount_out_tx = fill_amount_out(tx, wallet_address)
             currency_tx = fill_currency(tx)
+            currency_type = fill_currency_type(tx)
             description_tx = descriptionv3(
                 tx, wallet_address, counterparty_address, amount_in_tx, amount_out_tx
             )
@@ -440,13 +450,13 @@ def process_transactions(project_id, json_data, wallet_address):
                         "Amount In": amount_in_tx,
                         "Amount Out": amount_out_tx,
                         "Currency": currency_tx,
+                        "Currency Type" : currency_type,
                         "Description": description_tx,
                         "Counterparty address": counterparty_address,
                         "Counterparty name": counterparty_name,
                         "Transaction hash": tx["transactionHash"],
                         "Blockchain": "Starknet",
                         "Wallet": wallet_address,
-                        "tx_hash": tx_hash,
                     }
                 ]
             )

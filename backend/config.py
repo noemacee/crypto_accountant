@@ -2,7 +2,7 @@ PAGE_SIZE = 100
 
 
 WALLET_ADDRESSES = [
-    "0x035b6530ef09e227ca9f92efb66df12d0da9fface35ecd53b53a918c7d4eaa75",
+    "0x035c36258fffc1da38afcab896a0967ee6997157f42311757e808509226fe5a1",
 ]
 
 important_addresses = {
@@ -77,18 +77,46 @@ addresses_to_Starknet = {
 addresses2exchanges_map = {
     # Ekubo
     "0x04505a9f06f2bd639b6601f37a4dc0908bb70e8e0e0c34b1220827d64f4fc066": "Ekubo",  # Unknown Address to understand
+
     # Nostra
-    # "0x040784ffdde08057a5957e64ed360c0ae4e04117b6d8e351c6bb912c09c5cbf5": "Nostra",  # Strk/USD - Bug from Andrei's code. This one should be included as EXCHANGE
+    "0x040784ffdde08057a5957e64ed360c0ae4e04117b6d8e351c6bb912c09c5cbf5": "Nostra",  # Strk/USD - Exceptional case (normally marked as DeFi deposit)
     # "0x01a2de9f2895ac4e6cb80c11ecc07ce8062a4ae883f64cb2b1dc6724b85e897d": "Nostra",  # Strk/Eth Degen - Bug from Andrei's code
+    
     # AVNU
     "0x04270219d365d6b017231b52e92b3fb5d7c8378b05e9abc97724537a80e93b0f": "AVNU",  # AVNU Exchange address.
+    
     # Binance
-    "0x0213c67ed78bc280887234fe5ed5e77272465317978ae86c25a71531d9332a2d": "Binance",
+    #"0x0213c67ed78bc280887234fe5ed5e77272465317978ae86c25a71531d9332a2d": "Binance", # Removed out of "Transfer description"
     # Mint / Bridge
-    "0x0000000000000000000000000000000000000000000000000000000000000000": "Mint (Bridge)",
-    "0x051ba9be967d17aaafac92f9bc7ca4b035dfd3c4a97b32be1773f63e27b0526a": "StarkGate",
+    #"0x0000000000000000000000000000000000000000000000000000000000000000": "Mint (Bridge)", # Removed out of "Transfer description"
+    #"0x051ba9be967d17aaafac92f9bc7ca4b035dfd3c4a97b32be1773f63e27b0526a": "StarkGate", # Removed out of "Transfer description"
 }
 
+addresses2CEXs_map = {
+        # Binance
+    "0x0213c67ed78bc280887234fe5ed5e77272465317978ae86c25a71531d9332a2d": "Binance", # Removed out of "Transfer description"
+    # Mint / Bridge
+    "0x0000000000000000000000000000000000000000000000000000000000000000": "", # Removed out of "Transfer description"
+    "0x051ba9be967d17aaafac92f9bc7ca4b035dfd3c4a97b32be1773f63e27b0526a": "StarkGate", # Removed out of "Transfer description"
+
+    # Starknet Foundation
+    "0x025c3ebe94f55ea8eb289cb34844f2630551bd198d9915c91dcd661a90a1dc1e" : "Starknet Foundation"
+}
+
+# Token addresses
+tokenaddresses_map = {
+    "0x049d36570d4e46f48e99674bd3fcc84644ddd6b96f7c741b1562b82f9e004dc7" : "ETH",
+    "0x04718f5a0fc34cc1af16a1cdee98ffb20c31f5cd61d6ab07201858f4287c938d" : "STRK",
+    "0x75afe6402ad5a5c20dd25e10ec3b3986acaa647b77e4ae24b0cbc9a54a27a87" : "EKUBO",
+    "0x53c91253bc9682c04929ca02ed00b3e423f6710d2ee7e0d5ebb06f3ecf368a8" : "USDC",
+    "0x68f5c6a61780768455de69077e07e89787839bf8166decfbf92b645209c0fb8": "USDT",
+    "0x3fe2b97c1fd336e750087d68b9b867997fd64a2661ff3ca5a7c771641e8e7ac": "WBTC",
+    "0x610dbd98a28ebba525e9926b6aaf88f9159edbfd": "NSTR",
+    "0xda114221cb83fa859dbdb4c44beeaa0bb37c7537ad5ae66fe5e0efd20e6eb3": "DAI",
+    "0x4619e9ce4109590219c5263787050726be63382148538f3f936c22aa87d2fc2": "nstSTRK" # Nostra Staked
+}
+
+token_symbols = ["STRK", "ETH", "WBTC", "USDC", "USDT"]
 
 # Pool contracts data
 
