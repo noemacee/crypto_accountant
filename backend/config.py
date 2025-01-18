@@ -2,33 +2,15 @@ PAGE_SIZE = 100
 
 
 WALLET_ADDRESSES = [
-    "0x035c36258fffc1da38afcab896a0967ee6997157f42311757e808509226fe5a1",
+    "0x035b6530ef09e227ca9f92efb66df12d0da9fface35ecd53b53a918c7d4eaa75",
 ]
 
-important_addresses = {
+important_addresses = { # Used in "descriptionv3"
     "sequencer": "0x01176a1bd84444c89232ec27754698e5d2e7e1a7f1539f12027f28b23ec9f3d8",
 }
 
-protocols_list = ["Nostra", "Ekubo", "AVNU", "Vesu", "Fibrous"]
 
-address_to_contract_alias = {  # Used for 'from_alias' and 'to_alias' columns
-    # Ekubo
-    "0x00000005dd3d2f4429af886cd1a3b08289dbcea99a294197e9eb43b0e0325b4b": "Ekubo Core",
-    "0x02e0af29598b407c8716b17f6d2795eca1b471413fa03fb145a5e33722184067": "Ekubo Positions",
-    "0x07b696af58c967c1b14c9dde0ace001720635a660a8e90c565ea459345318b30": "Ekubo Positions NFT",
-    # Nostra
-    "0x073f6addc9339de9822cab4dac8c9431779c09077f02ba7bc36904ea342dd9eb": "Nostra CDP Manager / Deferred Batch Call Adapter",
-    "0x059a943ca214c10234b9a3b61c558ac20c005127d183b86a99a8f3c60a08b4ff": "Nostra Interest Rate Model",
-    "0x1bcfcb651e98317dc042cb34d0e0226c7f83bca309b6c54d8f0df6ee4e5f721": "Nostra Flash Loan Adapter",
-    # AVNU
-    "0x04270219d365d6b017231b52e92b3fb5d7c8378b05e9abc97724537a80e93b0f": "AVNU Exchange",
-    "0x0360fb3a51bd291e5db0892b6249918a5689bc61760adcb350fe39cd725e1d22": "AVNU Fee Collector",
-    "0x0759c955b1cfddb8fcab93fddb0da1902d55bfe98bc4605ecb8cd4c635bc085b": "AVNU Elite Role NFT",
-    # Starknet
-    "0x01176a1bd84444c89232ec27754698e5d2e7e1a7f1539f12027f28b23ec9f3d8": "StarkWare: Sequencer",
-}
-
-address_to_protocol = {  # Used for 'DeFi Deposit' and 'DeFi Withdrawal' descriptions.
+address_to_protocol = {  # Used for "description_v3" and "fill_counterparty_name"
     # Ekubo : https://docs.ekubo.org/integration-guides/reference/contract-addresses
     # Ekubo Upgradeable contracts
     "0x00000005dd3d2f4429af886cd1a3b08289dbcea99a294197e9eb43b0e0325b4b": "Ekubo",  # Core
@@ -64,17 +46,17 @@ address_to_protocol = {  # Used for 'DeFi Deposit' and 'DeFi Withdrawal' descrip
     "0x049ff5b3a7d38e2b50198f408fa8281635b5bc81ee49ab87ac36c8324c214427": "Nostra",  # Pool - Router
 }
 
-addresses_to_PKLabs = {
+addresses_to_PKLabs = { # Used for "description_v3" but took it out for privacy reasons
     "0x035c36258fffc1da38afcab896a0967ee6997157f42311757e808509226fe5a1": "PK Labs",
     "0x01355a4c0a859f3f4e163e7700f6034bda0de11e55eb64978f6fd914001a54b0": "PK Labs",
     "0x035b6530ef09e227ca9f92efb66df12d0da9fface35ecd53b53a918c7d4eaa75": "PK Labs",
 }
 
-addresses_to_Starknet = {
+addresses_to_Starknet = { # Used for "fill_counterparty_name"
     "0x01176a1bd84444c89232ec27754698e5d2e7e1a7f1539f12027f28b23ec9f3d8": "Starknet",
 }
 
-addresses2exchanges_map = {
+addresses2exchanges_map = { # Used for "description_v3" and "fill_counterparty_name"
     # Ekubo
     "0x04505a9f06f2bd639b6601f37a4dc0908bb70e8e0e0c34b1220827d64f4fc066": "Ekubo",  # Unknown Address to understand
 
@@ -92,7 +74,7 @@ addresses2exchanges_map = {
     #"0x051ba9be967d17aaafac92f9bc7ca4b035dfd3c4a97b32be1773f63e27b0526a": "StarkGate", # Removed out of "Transfer description"
 }
 
-addresses2CEXs_map = {
+addresses2CEXs_map = { # Used for "fill_counterparty_name"
         # Binance
     "0x0213c67ed78bc280887234fe5ed5e77272465317978ae86c25a71531d9332a2d": "Binance", # Removed out of "Transfer description"
     # Mint / Bridge
@@ -104,7 +86,7 @@ addresses2CEXs_map = {
 }
 
 # Token addresses
-tokenaddresses_map = {
+tokenaddresses_map = {  # Not used but linked to "token_symbols"
     "0x049d36570d4e46f48e99674bd3fcc84644ddd6b96f7c741b1562b82f9e004dc7" : "ETH",
     "0x04718f5a0fc34cc1af16a1cdee98ffb20c31f5cd61d6ab07201858f4287c938d" : "STRK",
     "0x75afe6402ad5a5c20dd25e10ec3b3986acaa647b77e4ae24b0cbc9a54a27a87" : "EKUBO",
@@ -116,10 +98,9 @@ tokenaddresses_map = {
     "0x4619e9ce4109590219c5263787050726be63382148538f3f936c22aa87d2fc2": "nstSTRK" # Nostra Staked
 }
 
-token_symbols = ["STRK", "ETH", "WBTC", "USDC", "USDT"]
+token_symbols = ["STRK", "ETH", "WBTC", "USDC", "USDT"] # Used in "fill_currency_type"
 
 # Pool contracts data
-
 address_to_pool = {  # Used for "Nostra" in 'counterparty_name' column
     # Nostra : https://docs.nostra.finance/pools/deployed-contracts
     "0x068400056dccee818caa7e8a2c305f9a60d255145bac22d6c5c9bf9e2e046b71": "STRK/ETH",
@@ -149,7 +130,7 @@ address_to_pool = {  # Used for "Nostra" in 'counterparty_name' column
 }
 
 
-address_to_debt_token = {
+address_to_debt_token = { # Used for fill_counterparty_name
     # Nostra : https://docs.nostra.finance/lend-and-borrow/deployed-contracts/money-market-mainnet
     "0x0491480f21299223b9ce770f23a2c383437f9fbf57abc2ac952e9af8cdb12c97": "WBTC",
     "0x00ba3037d968790ac486f70acaa9a1cab10cf5843bb85c986624b4d0e5a82e74": "ETH",
@@ -168,7 +149,7 @@ address_to_debt_token = {
 
 
 # ibc = interest bearing collaterals
-address_to_ibc_token = {
+address_to_ibc_token = { # Used for fill_counterparty_name
     # Nostra : https://docs.nostra.finance/lend-and-borrow/deployed-contracts/money-market-mainnet
     "0x05b7d301fa769274f20e89222169c0fad4d846c366440afc160aafadd6f88f0c": "WBTC",
     "0x057146f6409deb4c9fa12866915dd952aa07c1eb2752e451d7f3b042086bdeb8": "ETH",
@@ -185,7 +166,7 @@ address_to_ibc_token = {
 }
 
 # ib = interest bearing
-address_to_ib_token = {
+address_to_ib_token = { # Not used
     # Nostra : https://docs.nostra.finance/lend-and-borrow/deployed-contracts/money-market-mainnet
     "0x0735d0f09a4e8bf8a17005fa35061b5957dcaa56889fc75df9e94530ff6991ea": "WBTC",
     "0x01fecadfe7cda2487c66291f2970a629be8eecdcb006ba4e71d1428c2b7605c7": "ETH",
@@ -203,7 +184,7 @@ address_to_ib_token = {
 }
 
 
-address_to_collateral_token = {
+address_to_collateral_token = { # Not used
     # Nostra : https://docs.nostra.finance/lend-and-borrow/deployed-contracts/money-market-mainnet
     "0x036b68238f3a90639d062669fdec08c4d0bdd09826b1b6d24ef49de6d8141eaa": "WBTC",
     "0x044debfe17e4d9a5a1e226dabaf286e72c9cc36abbe71c5b847e669da4503893": "ETH",
@@ -220,12 +201,12 @@ address_to_collateral_token = {
     "0x6b1063a4d5c32fef3486bf29d1719eb09481b52d31f7d86a50c64b0b8d5defb": "EKUBO",
 }
 
-address_to_liquid_staking = {
+address_to_liquid_staking = { # Not used
     "0x04619e9ce4109590219c5263787050726be63382148538f3f936c22aa87d2fc2": "nstSTRK"
 }
 
 
-address_to_call_function = {
+address_to_call_function = { # Not used
     "0x83afd3f4caedc6eebf44246fe54e38c95e3179a5ec9ea81740eca5b482d12e": "transfer",
     "0x015511cc3694f64379908437d6d64458dc76d02482052bfb8a5b33a72c054c77": "withdraw",
     "0x02f0b3c5710379609eb5495f1ecd348cb28167711b73609fe565a72734550354": "mint",
