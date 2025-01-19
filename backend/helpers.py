@@ -81,31 +81,6 @@ def address_converter(address):
     # Add "0x" prefix back
     return f"0x{padded_address}"
 
-
-def process_transaction_call(transaction: Dict) -> Optional[str]:
-    """
-    Process transaction call data and return matching function name.
-
-    Args:
-        transaction (Dict): Transaction data containing calldata
-        function_map (Dict[str, str]): Normalized function mapping
-
-    Returns:
-        Optional[str]: Matching function name or None
-    """
-    if not transaction or "calldata" not in transaction:
-        print("Transaction or calldata missing.")
-        return None
-
-    # Normalize and check calldata against function map
-    for call in transaction["calldata"]:
-        normalized_call = address_converter(call)
-        if normalized_call in address_to_call_function:
-            return address_to_call_function[normalized_call]
-
-    return None
-
-
 def alchemy_getClassHashAt(network_url, block_number, contract_hash):
     url = network_url
     headers = {"accept": "application/json", "content-type": "application/json"}
@@ -128,70 +103,6 @@ def alchemy_getClassHashAt(network_url, block_number, contract_hash):
     except requests.exceptions.RequestException as e:
         print(f"Request failed: {e}")
         return None
-
-
-def descriptionv2(df):
-    protocols_list = ["Nostra", "Ekubo", "AVNU", "Vesu"]
-
-    # Create column
-    if "Description" not in df.columns:
-        df.insert(
-            df.columns.get_loc("Amount currency")
-            + 1,  # Get the index after 'Amount currency'
-            "Description",  # Column name
-            "",  # Initialize with empty strings
-        )
-
-    # Condition 1: Transfer Fee
-    # df.loc[df["transfer_type"] == "fee_transfer", "Description"] = "Transaction fee"
-    df.loc[df["transfer_to"] == important_addresses["sequencer"], "Description"] = (
-        "Transaction Fee"
-    )
-
-    # Condition 2: DeFI Interest
-    df["Amount In"] = pd.to_numeric(df["Amount In"], errors="coerce")
-    df.loc[(df["call"] == "claim") & pd.notna(df["Amount In"]), "Description"] = (
-        "DeFi Interest"
-    )
-
-    # Condition 3 : DeFI Deposit
-    df.loc[
-        df["transfer_to"].isin(
-            [
-                key
-                for key in address_to_protocol.keys()
-                if key != important_addresses["sequencer"]
-            ]
-        ),
-        "Description",
-    ] = "DeFi Deposit"
-
-    # Condition 4 : DeFI Withdrawal
-    df.loc[
-        df["transfer_from"].isin(
-            key
-            for key in address_to_protocol.keys()
-            if key != important_addresses["sequencer"]
-        )
-        & pd.notna(df["Amount In"]),
-        "Description",
-    ] = "DeFi Withdrawal"
-
-    # Condition 5 : Exchanges
-    df.loc[
-        df["Counterparty address"].isin(addresses2exchanges_map.keys()), "Description"
-    ] = "Exchange"
-
-    # Condition 6 : Transfer¨
-    df.loc[
-        (df["call"] == "transfer") & (df["Counterparty name"] == ""), "Description"
-    ] = "Transfer"
-
-    # Condition 7 : Unknown
-    df.loc[(df["Counterparty name"] == "/"), "Description"] = "/"
-
-    return df
-
 
 def descriptionv3(tx, wallet_address, counterparty_address, amount_in, amount_out):
     description = "No description found"
@@ -250,57 +161,6 @@ def descriptionv3(tx, wallet_address, counterparty_address, amount_in, amount_ou
         description = "Transfer"
 
     return description
-
-
-def AUX_fill_counterparty_name(df):
-    """
-    Fill empty Counterparty names by checking class hash.
-    Returns the modified DataFrame.
-    """
-    network_url = "https://starknet-mainnet.g.alchemy.com/starknet/version/rpc/v0_7/up4Ow19ZZxwdQ6M11l9e8KBo8BdNAo_u"
-    block_number = "latest"  # Keep as string but pass directly in params
-    mother_classes = [
-        "0x6a54af2934978ac59b27b91291d3da634f161fd5f22a2993da425893c44c64",
-        "0x18758d409574a66615683bf529b5ff4f5c84b09fcfea48102fa3153039ebc10",  # Careful with 0-padding. Check function converter_address
-    ]
-
-    # Fill empty Counterparty names by checking class hash
-    empty_counterparty_mask = df[
-        "Counterparty name"
-    ].isna()  # Empty counterparty names are NaN
-    if empty_counterparty_mask.any():
-        for idx in df[empty_counterparty_mask].index:
-            counterparty_addr = df.loc[idx, "Counterparty address"]
-            try:
-                response = alchemy_getClassHashAt(
-                    network_url, block_number, counterparty_addr
-                )
-                if (
-                    response
-                    and "result" in response
-                    and response["result"] in mother_classes
-                ):
-                    df.loc[idx, "Counterparty name"] = "Nostra"
-            except Exception as e:
-                print(f"Error getting class hash for {counterparty_addr}: {e}")
-                continue
-
-    return df
-
-
-def call_column(hash: str, project_id: str) -> Optional[str]:
-    """
-    Main function to process transaction hash and return function name.
-
-    Args:
-        hash (str): Transaction hash
-        project_id (str): Project identifier
-
-    Returns:
-        Optional[str]: Matching function name or None
-    """
-    tx = getTransaction(project_id, hash)
-    return process_transaction_call(tx)
 
 
 def fill_datetime(tx):
@@ -405,7 +265,7 @@ def process_transactions(project_id, json_data, wallet_address):
             "Currency",
             "Currency Type",
             "Description",
-            "Counterparty address",  # Helper
+            "Counterparty address",  
             "Counterparty name",
             "Transaction hash",
             "Blockchain",
@@ -414,57 +274,38 @@ def process_transactions(project_id, json_data, wallet_address):
     )
 
     # Use tqdm for the progress bar
-    for operation_idx, tx in enumerate(
-        tqdm(token_transfers, desc="Processing transactions", unit="tx")
-    ):
-        #### Discard ?
-        token_address = tx.get("contractAddress", "")
+    for operation_idx, tx in enumerate(tqdm(token_transfers, desc="Processing transactions", unit="tx")):
+        tx_hash = tx["transactionHash"]
+        counterparty_address = fill_counterparty_address(wallet_address, tx)
+        counterparty_name = fill_counterparty_name(counterparty_address, tx)
+        datetime_tx = fill_datetime(tx)
+        amount_in_tx = fill_amount_in(tx, wallet_address)
+        amount_out_tx = fill_amount_out(tx, wallet_address)
+        currency_tx = fill_currency(tx)
+        currency_type = fill_currency_type(tx)
+        description_tx = descriptionv3(tx, wallet_address, counterparty_address, amount_in_tx, amount_out_tx)
 
-        if all(
-            token_address not in token_dict or token_dict[token_address] == ""
-            for token_dict in [
-                address_to_pool,
-                address_to_debt_token,
-                address_to_ibc_token,
-            ]
-        ):
-            ###
-            tx_hash = tx["transactionHash"]
-            counterparty_address = fill_counterparty_address(wallet_address, tx)
-            counterparty_name = fill_counterparty_name(counterparty_address, tx)
-            datetime_tx = fill_datetime(tx)
-            amount_in_tx = fill_amount_in(tx, wallet_address)
-            amount_out_tx = fill_amount_out(tx, wallet_address)
-            currency_tx = fill_currency(tx)
-            currency_type = fill_currency_type(tx)
-            description_tx = descriptionv3(
-                tx, wallet_address, counterparty_address, amount_in_tx, amount_out_tx
-            )
-
-            # Create a single-row DataFrame for the current operation
-            record_df = pd.DataFrame(
-                [
-                    {
-                        "Transaction #": transaction_hash_mapping[tx_hash],
-                        "Datetime": datetime_tx,
-                        "Amount In": amount_in_tx,
-                        "Amount Out": amount_out_tx,
-                        "Currency": currency_tx,
-                        "Currency Type" : currency_type,
-                        "Description": description_tx,
-                        "Counterparty address": counterparty_address,
-                        "Counterparty name": counterparty_name,
-                        "Transaction hash": tx["transactionHash"],
-                        "Blockchain": "Starknet",
-                        "Wallet": wallet_address,
+        # Create a single-row DataFrame for the current operation
+        record_df = pd.DataFrame(
+            [
+                {
+                    "Transaction #": transaction_hash_mapping[tx_hash],
+                    "Datetime": datetime_tx,
+                    "Amount In": amount_in_tx,
+                    "Amount Out": amount_out_tx,
+                    "Currency": currency_tx,
+                    "Currency Type" : currency_type,
+                    "Description": description_tx,
+                    "Counterparty address": counterparty_address,
+                    "Counterparty name": counterparty_name,
+                    "Transaction hash": tx["transactionHash"],
+                    "Blockchain": "Starknet",
+                    "Wallet": wallet_address,
                     }
                 ]
             )
 
             # Concatenate the single-row DataFrame to the main DataFrame
             df = pd.concat([df, record_df], ignore_index=True)
-
-    # df = AUX_fill_counterparty_name(df)
-    # df = descriptionv2(df)
 
     return df
