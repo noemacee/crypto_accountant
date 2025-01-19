@@ -305,7 +305,7 @@ def process_transactions(project_id, json_data, wallet_address):
                 ]
             )
 
-            # Concatenate the single-row DataFrame to the main DataFrame
-            df = pd.concat([df, record_df], ignore_index=True)
+        # Concatenate the single-row DataFrame to the main DataFrame
+        df = pd.concat([df, record_df], ignore_index=True)
 
     return df
