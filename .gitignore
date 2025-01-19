@@ -3,3 +3,4 @@ env
 .env
 *.csv
 *.json
+*.session.sql
