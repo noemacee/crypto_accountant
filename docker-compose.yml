@@ -7,10 +7,11 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
     ports:
-      - "3000:3000" # Frontend runs on port 3000
+      - "${FRONTEND_PORT_HOST}:${FRONTEND_PORT_CONTAINER}"
     environment:
-      - API_URL=http://backend:5000 # Point frontend to backend
+      - API_URL=${BACKEND_API_URL}
     env_file:
+      - .env # Shared .env file
       - ./frontend/.env # Frontend-specific .env file
     depends_on:
       - backend # Ensure backend is ready before frontend starts
@@ -21,9 +22,10 @@ services:
       context: ./backend
       dockerfile: Dockerfile
     env_file:
+      - .env # Shared .env file
       - ./backend/.env # Backend-specific .env file
     ports:
-      - "5001:5000" # Backend runs on port 5000
+      - "${BACKEND_PORT_HOST}:${BACKEND_PORT_CONTAINER}"
     volumes:
       - ./backend:/app # Mount backend code for live updates (optional)
     depends_on:
@@ -31,17 +33,19 @@ services:
 
   db:
     # Database service (POSTGRES_HOST)
-    container_name: hetzner_db
+    container_name: ${DATABASE_CONTAINER_NAME}
     image: postgres:14
     env_file:
+      - .env # Shared .env file
       - ./backend/.env # Use an environment file for sensitive values
     ports:
-      - "5432:5432"
+      - "${POSTGRES_PORT}:${POSTGRES_PORT}"
     volumes:
-      - hetzner:/var/lib/postgresql/data # Persist database data
-      - ./backend/db/init.sql:/docker-entrypoint-initdb.d/init.sql:ro # Mount init.sql for initialization
+      - DB_VOLUME:/var/lib/postgresql/data
+      - ./backend/db/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+      - ./backend/db/init-db.sh:/docker-entrypoint-initdb.d/init-db.sh:ro
 
 volumes:
-  hetzner:
+  DB_VOLUME:
 
 

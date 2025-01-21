@@ -19,16 +19,36 @@ def generate_api_key():
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
+
+        # Insert the new API key and fetch the result
         cursor.execute(
             "INSERT INTO api_keys (api_key, owner) VALUES (%s, %s) RETURNING api_key",
             (api_key, owner),
         )
         conn.commit()
-        new_key = cursor.fetchone()[0]
+
+        # Ensure fetchone() is handled correctly
+        result = cursor.fetchone()
+        if result is None or len(result) == 0:
+            raise ValueError("No API key was returned after insertion.")
+
+        # Access the API key based on the result type
+        if isinstance(result, dict):  # Mapping (e.g., DictCursor)
+            new_key = result["api_key"]
+        elif isinstance(result, tuple):  # Default tuple-based cursor
+            new_key = result[0]
+        else:
+            raise ValueError("Unexpected result type from fetchone()")
+
         cursor.close()
         conn.close()
+
+        # Return the newly created API key
         return jsonify({"api_key": new_key}), 201
+
     except Exception as e:
+        # Log the error for debugging
+        print(f"Error while generating API key: {str(e)}")
         return jsonify({"error": str(e)}), 500
 
 
